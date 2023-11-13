@@ -1,6 +1,7 @@
-import { AgenciesEnum, GroupsEnum } from '@/constants';
+import { AgenciesEnum } from '@/constants/agency';
 import { MantineColor } from '@mantine/core';
-import { Icon, TablerIconsProps } from '@tabler/icons-react';
+import { Icon } from '@tabler/icons-react';
+import { StoreGroupsEnum } from '@/constants/store';
 
 export interface Item {
   name: string;
@@ -19,7 +20,7 @@ export interface FullItem extends Item {
 }
 
 export interface StoreByGroup {
-  id: GroupsEnum;
+  id: StoreGroupsEnum;
   title: string;
   items: FullItem[];
 }

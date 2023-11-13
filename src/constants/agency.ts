@@ -23,15 +23,6 @@ export enum AgenciesEnum {
   INDIE = 'INDIE',
 }
 
-export enum GroupsEnum {
-  SOLO,
-  GROUP,
-  STAFF,
-  TRAINEE,
-  ACTING,
-  MODEL,
-}
-
 export const AGENCIES: AgencyItem[] = [
   {
     label: 'ACT.7',
