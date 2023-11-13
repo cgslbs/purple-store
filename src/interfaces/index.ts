@@ -25,6 +25,8 @@ export interface StoreByGroup {
   items: FullItem[];
 }
 
+export type StoryByGroupTabs = Pick<StoreByGroup, 'id' | 'title'>;
+
 export type AgencyItem = {
   label: string;
   value: AgenciesEnum;

@@ -21,7 +21,7 @@ export default function SelectAgency() {
       title="Choisissez votre agence!"
       centered
     >
-      <Stack align="center">
+      <Stack align="center" py="lg">
         <SimpleGrid cols={3} spacing="lg">
           {AGENCIES.map((agency) => (
             <Tooltip key={agency.label} label={agency.label}>

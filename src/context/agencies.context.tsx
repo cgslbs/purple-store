@@ -7,19 +7,18 @@ import {
   useContext,
   useReducer,
 } from 'react';
-import { User } from '../interfaces/index';
 
 type StateType = {
   defaultAgency: AgenciesEnum | null;
 };
 
-type ActionType = AgenciesEnum;
+type ActionType = AgenciesEnum | null;
 
 const initialState: StateType = {
   defaultAgency: null,
 };
 
-const reducer = (state: User, action: ActionType) => {
+const reducer = (state: StateType, action: ActionType) => {
   if (action !== null) {
     return { ...state, defaultAgency: action };
   }
@@ -28,7 +27,7 @@ const reducer = (state: User, action: ActionType) => {
 
 type AgencyContextType = {
   state: StateType;
-  dispatch: Dispatch<AgenciesEnum>;
+  dispatch: Dispatch<AgenciesEnum | null>;
 };
 
 export const AgencyContext = createContext<AgencyContextType>({
