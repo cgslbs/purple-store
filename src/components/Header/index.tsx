@@ -43,7 +43,8 @@ export function HeaderTabs() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   const tabStore =
-    state.defaultAgency === AgenciesEnum.MT
+    state.defaultAgency === AgenciesEnum.MT ||
+    state.defaultAgency === AgenciesEnum.HR
       ? DEFAULT_STORE_GROUP
       : [...DEFAULT_STORE_GROUP, GROUP_STORE];
 

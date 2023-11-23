@@ -7,7 +7,6 @@ import { useContext, useMemo } from 'react';
 
 export default function SelectAgency() {
   const { state, dispatch } = useContext(AgencyContext);
-  console.log('currentState', state);
 
   const modalOpened = useMemo(() => {
     return state.defaultAgency === null;
