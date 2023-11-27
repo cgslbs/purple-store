@@ -15,7 +15,8 @@
     "@tabler/icons-react": "^2.40.0",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.48.2"
   },
   "devDependencies": {
     "@types/node": "^20",
