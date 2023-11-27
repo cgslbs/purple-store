@@ -1,38 +1,348 @@
-import { StoryByGroupTabs } from '@/interfaces';
+import { StoreByGroup, StoryByGroupTabs } from '@/interfaces'
+import { AgenciesEnum } from './agency'
 
 export enum StoreGroupsEnum {
-  SOLO,
-  GROUP,
-  STAFF,
-  TRAINEE,
-  ACTING,
-  MODEL,
+	SOLO,
+	GROUP,
+	STAFF,
+	TRAINEE,
+	ACTING,
+	MODEL,
 }
 
-export const DEFAULT_STORE_GROUP: StoryByGroupTabs[] = [
-  {
-    title: 'Solistes',
-    id: StoreGroupsEnum.SOLO,
-  },
-  {
-    title: 'Trainees',
-    id: StoreGroupsEnum.TRAINEE,
-  },
-  {
-    title: 'Staffs',
-    id: StoreGroupsEnum.STAFF,
-  },
-  {
-    title: 'Acteurs',
-    id: StoreGroupsEnum.ACTING,
-  },
-  {
-    title: 'Influenceur, models & sportifs',
-    id: StoreGroupsEnum.MODEL,
-  },
-];
+export const DEFAULT_STORE_GROUP_TABS: StoryByGroupTabs[] = [
+	{
+		title: 'Solistes',
+		id: StoreGroupsEnum.SOLO,
+	},
+	{
+		title: 'Trainees',
+		id: StoreGroupsEnum.TRAINEE,
+	},
+	{
+		title: 'Staffs',
+		id: StoreGroupsEnum.STAFF,
+	},
+	{
+		title: 'Acteurs',
+		id: StoreGroupsEnum.ACTING,
+	},
+	{
+		title: 'Influenceur, models & sportifs',
+		id: StoreGroupsEnum.MODEL,
+	},
+]
 
-export const GROUP_STORE: StoryByGroupTabs = {
-  title: 'Groupes',
-  id: StoreGroupsEnum.GROUP,
-};
+export const GROUP_STORE_TABS: StoryByGroupTabs = {
+	title: 'Groupes',
+	id: StoreGroupsEnum.GROUP,
+}
+
+export enum StoreSectionEnum {
+	COMEBACK,
+	PROMOTE,
+	BOOSTER,
+	PROJECT,
+	GOODIES,
+	CONTENT,
+}
+
+export const DEFAULT_STORE_GROUP: StoreByGroup = {
+	title: 'Boutique groupe',
+	id: StoreGroupsEnum.GROUP,
+	sectionItems: [
+		{
+			id: StoreSectionEnum.COMEBACK,
+			title: 'Réaliser un comeback',
+			description:
+				"les solos purs, réalisés en dehors d’une activité de groupe (ex. il ne s'agit pas d'intro. de membre ou d'era ni d'outro du groupe), doivent obligatoirement être fait par des personnages ayant au minimum le niveau 8.",
+			items: [
+				{ id: 1, name: 'single', gain: 14, price: 140, condition: '' },
+				{ id: 2, name: 'commercial mv (single)', condition: '', price: 240, gain: 24 },
+				{ id: 3, name: 'mini album (2 à 4 chansons)', price: 180, gain: 18 },
+				{ id: 4, name: 'mini album (5 à 7 chansons)', condition: '', price: 240, gain: 24 },
+				{
+					id: 6,
+					name: 'repack album',
+					condition: 'max 10 nouvelles chansons + min 3 chansons déjà sorties.',
+					price: 280,
+					gain: 28,
+				},
+				{
+					id: 7,
+					name: 'double release',
+					condition: 'sortie comprenant deux mvs (ex. blackpink whistle & boombayah sortie en même temps).',
+					price: 240,
+					gain: 24,
+				},
+				{
+					id: 8,
+					name: "conversion jpn ou chn d'un single kr",
+					bonusStatus: [AgenciesEnum.XY],
+					condition: 'item possible si le groupe a release la version kr 6 mois auparavant minimum.',
+					price: 120,
+					gain: 12,
+				},
+				{
+					id: 9,
+					name: 'single jpn ou chn',
+					bonusStatus: [AgenciesEnum.XY],
+					condition: 'chinois, japonais ; palier 7, xingyuan music : palier 5',
+					price: 180,
+					gain: 18,
+				},
+				{
+					id: 10,
+					name: 'single anglais',
+					condition: ' palier 9 pour la moitié du groupe au moins.',
+					price: 240,
+					gain: 24,
+				},
+				{ id: 11, name: 'featuring', condition: '', price: 60, gain: 6 },
+				{ id: 12, name: 'collaboration', condition: '', price: 120, gain: 12 },
+				{ id: 13, name: 'ost', condition: '', price: 100, gain: 10 },
+			],
+		},
+		{
+			id: StoreSectionEnum.PROMOTE,
+			title: 'Promotion générale',
+			description: '',
+			items: [
+				{ id: 14, name: 'expérience', condition: 'achat limité à 10 quantités par mois.', price: 100, gain: 10 },
+				{ id: 15, name: 'faire une dance practice', condition: '', price: 50, gain: 5 },
+				{ id: 16, name: 'photoshoot', bonusStatus: [AgenciesEnum.WM], condition: '', price: 60, gain: 6 },
+				{
+					id: 17,
+					name: 'couverture de magazine (3★)',
+					bonusStatus: [AgenciesEnum.WM],
+					condition: " l'item doit être cumulé avec l'item photoshoot.",
+					price: 60,
+					gain: 6,
+				},
+				{ id: 18, name: 'interview magazine', condition: '', price: 60, gain: 6 },
+				{ id: 19, name: 'interview vidéo (ex. elle)', condition: '', price: 60, gain: 6 },
+				{ id: 20, name: 'commercials', bonusStatus: [AgenciesEnum.WM], condition: '', price: 140, gain: 14 },
+				{ id: 21, name: 'bonus égérie: participer à un photoshoot / cf', condition: '', price: 0, gain: 5 },
+				{ id: 22, name: "face d'une marque kr (2★)", condition: '', price: 180, gain: 18 },
+				{ id: 23, name: "face d'une marque inter (3★)", condition: '', price: 250, gain: 25 },
+				{ id: 24, name: "ambassadeur d'une marque kr (3★)", condition: '', price: 180, gain: 18 },
+				{ id: 25, name: "ambassadeur d'une marque internationale (4★)", condition: '', price: 600, gain: 60 },
+				{ id: 26, name: 'réaliser des campagnes publicitaires', condition: '', price: 200, gain: 20 },
+				{
+					id: 27,
+					name: 'bonus égérie: post sur les réseaux en partenariat avec une marque',
+					condition: '',
+					price: 0,
+					gain: 4,
+				},
+				{
+					id: 28,
+					name: "être mc d'une émission",
+					bonusStatus: [AgenciesEnum.MC],
+					condition: 'avoir obligatoirement le skill variety show & le palier 7.',
+					price: 160,
+					gain: 16,
+				},
+				{
+					id: 29,
+					name: "faire partie du casting d'une émission",
+					condition: 'cet item est pour les apparitions à longue durée type sea of hope etc...',
+					price: 300,
+					gain: 30,
+				},
+				{ id: 30, name: 'apparition dans une émission', condition: '', price: 80, gain: 8 },
+				{ id: 31, name: 'bonus skill face: émission', condition: '', price: 0, gain: 5 },
+				{
+					id: 32,
+					name: "être mc d'un music show",
+					condition:
+						"palier 6. pour savoir si une place est libre actuellement, merci d'aller vérifier dans le sujet MY!CUE & GEUMSORI (+ les conditions).",
+					price: 160,
+					gain: 16,
+				},
+				{
+					id: 33,
+					name: 'avoir son talk show (radio)',
+					condition:
+						'palier 9. cet item s’achète une fois pour le talk show en question. si vous souhaitez y ajouter une nouvelle saison, il faudra acheter l’année suivant l’item nouvelle saison.',
+					price: 240,
+					gain: 24,
+				},
+				{ id: 34, name: 'nouvelle saison talk show', condition: 'palier 9.', price: 120, gain: 12 },
+				{ id: 35, name: 'participer à un radio show', condition: '', price: 80, gain: 8 },
+				{ id: 36, name: 'apparaître dans un m/v', condition: '', price: 60, gain: 6 },
+				{ id: 37, name: 'youtube (1 mois)', condition: '', price: 80, gain: 8 },
+				{ id: 38, name: 'youtube (15jrs)', condition: '', price: 110, gain: 11 },
+				{ id: 39, name: 'bonus gnation: poster sur youtube', condition: '', price: 0, gain: 4 },
+				{ id: 40, name: 'faire certifier ses réseaux', condition: '', price: 100, gain: 10 },
+			],
+		},
+		{
+			id: StoreSectionEnum.BOOSTER,
+			title: 'boosters',
+			description:
+				'pour rappel, la moitié minimum du groupe doit acheter des boosters (par exemple 2/4 ou 3/5) et celles et ceux achetant les items doivent en prendre un nombre égal (sans que ça soit les mêmes).',
+			items: [
+				{ id: 41, name: 'réaliser des teasers pour son cb', condition: '', price: 100, gain: 6000 },
+				{ id: 42, name: 'vlive countdown', condition: '', price: 300, gain: 18000 },
+				{ id: 43, name: 'fans meetings', condition: "peut s'acheter jusqu’à 4 fois par cb.", price: 50, gain: 3000 },
+				{ id: 44, name: 'instagram live promotionnel', condition: '', price: 100, gain: 6000 },
+				{ id: 45, name: 'showcase', condition: '', price: 150, gain: 9000 },
+				{
+					id: 46,
+					name: 'promotions (studio choom, relay dance, live…)',
+					condition: "peut s'acheter jusqu’à 4 fois par cb.",
+					price: 50,
+					gain: 3000,
+				},
+				{
+					id: 47,
+					name: 'inscription music show (petit budget)',
+					condition:
+						'les artistes s’inscrivant aux musics shows avec un petit budget ne font, en général, pas les 4 semaines de promotions. sinon, leur temps d’antenne diminue au fil des semaines',
+					price: 100,
+					gain: 6000,
+				},
+				{
+					id: 48,
+					name: 'inscription music show (gros budget)',
+					condition:
+						'les artistes avec un gros budget de promotions réalisent leurs 4 semaines et performent l’intégralité des chansons.',
+					price: 200,
+					gain: 12000,
+				},
+				{ id: 49, name: 'radio', condition: " peut s'acheter jusqu’à 4 fois par cb.", price: 50, gain: 3000 },
+				{
+					id: 50,
+					name: 'promotion télévisé (weekly idoles...)',
+					condition: "peut s'acheter jusqu’à 4 fois par cb.",
+					price: 50,
+					gain: 3000,
+				},
+				{ id: 51, name: 'affiches promotionnelles station métro/bus', condition: '', price: 200, gain: 12000 },
+				{ id: 52, name: 'affiches promotionnelles coex kpop square (2★)', condition: '', price: 300, gain: 18000 },
+			],
+		},
+		{
+			id: StoreSectionEnum.PROJECT,
+			title: 'réalisation de projet',
+			description:
+				'les items de production sont à prendre occasionnellement (3 fois/mois si lié au projet d’un tier) ; gardez en tête que les idoles n’ont pas beaucoup de temps à consacrer à d’autres productions/réalisations que les leurs. de ce fait, favorisez l’auto-prod.',
+			items: [
+				{
+					id: 53,
+					name: 'production d’une tt (crédité)',
+					bonusStatus: [AgenciesEnum.MT],
+					condition: 'composition, production, arrangement, paroles, beats.',
+					price: 140,
+					gain: 14,
+				},
+				{
+					id: 54,
+					name: 'production d’une tt (non crédité)',
+					condition: 'forcément associé à de la co-production, cet item n’apporte du coup pas de streams.',
+					price: 70,
+					gain: 7,
+				},
+				{ id: 55, name: 'production d’une b-side', bonusStatus: [AgenciesEnum.MT], condition: '', price: 70, gain: 7 },
+				{ id: 56, name: 'production 3 b-sides', bonusStatus: [AgenciesEnum.MT], condition: '', price: 210, gain: 25 },
+				{ id: 57, name: 'production d’une ost', condition: '', price: 50, gain: 5 },
+				{ id: 58, name: "participer à la chorégraphie d'une émission", price: 100, gain: 10 },
+				{ id: 59, name: 'chorégraphie', condition: '', price: 140, gain: 14 },
+				{ id: 60, name: 'direction artistique', condition: '', price: 140, gain: 14 },
+				{ id: 61, name: '2nd rôle (drama)', bonusStatus: [AgenciesEnum.A7], condition: '', price: 140, gain: 14 },
+				{ id: 62, name: 'lead rôle (drama)', bonusStatus: [AgenciesEnum.A7], condition: '', price: 240, gain: 24 },
+				{ id: 63, name: '2nd rôle (film)', bonusStatus: [AgenciesEnum.A7], condition: '', price: 160, gain: 16 },
+				{ id: 64, name: 'lead rôle (film)', bonusStatus: [AgenciesEnum.A7], condition: '', price: 260, gain: 26 },
+				{ id: 65, name: 'caméo (drama ou film)', bonusStatus: [AgenciesEnum.A7], condition: '', price: 80, gain: 8 },
+				{ id: 66, name: 'participer à un masterclass (1jr)', condition: '', price: 120, gain: 12 },
+				{ id: 67, name: 'participer à un séminaire (2 à 3 jrs)', price: 240, gain: 24 },
+			],
+		},
+		{
+			id: StoreSectionEnum.GOODIES,
+			title: 'VENTE DE GOODIES/PROJETS FAN',
+			description:
+				'il faut rester réaliste dans l’achat des items suivants. les albums s’achètent uniquement dans le cas d’une release, les albums concerts suite à un concert, season’s greetings une fois par un (au début d’année) etc…',
+			items: [
+				{ id: 68, name: 'album physique (simple)', condition: '', price: 50, gain: 5 },
+				{ id: 69, name: 'album physique (différentes versions)', condition: '', price: 70, gain: 7 },
+				{ id: 70, name: 'album physique (members versions)', condition: '', price: 100, gain: 10 },
+				{ id: 71, name: 'photobook & concert dvd', condition: '', price: 50, gain: 5 },
+				{ id: 72, name: 'photobook', condition: '', price: 60, gain: 6 },
+				{ id: 73, name: 'season’s greetings', condition: '', price: 60, gain: 6 },
+				{
+					id: 74,
+					name: 'official fanclub membership',
+					condition: 'achat possible une fois tous les 6 mois.',
+					price: 140,
+					gain: 14,
+				},
+				{ id: 75, name: 'lightstick', price: 100, gain: 10 },
+				{ id: 76, name: 'goodies divers', condition: '', price: 220, gain: 22 },
+				{ id: 77, name: 'vlive solo', condition: '', price: 50, gain: 5 },
+				{ id: 78, name: 'vlive groupe', condition: '', price: 100, gain: 10 },
+				{ id: 79, name: 'vlive anniversaire', condition: '', price: 200, gain: 20 },
+				{
+					id: 80,
+					name: 'affiches anniversaire',
+					condition:
+						's’achète pour l’anniversaire de l’artiste, mais également l’anniversaire des débuts de l’artiste.',
+					price: 240,
+					gain: 24,
+				},
+				{ id: 81, name: 'coffee event (anniversaire ou cb)', condition: '', price: 150, gain: 15 },
+				{ id: 82, name: 'envoi food truck', condition: '', price: 50, gain: 5 },
+				{
+					id: 83,
+					name: 'organiser un concert (corée)',
+					bonusStatus: [AgenciesEnum.HR],
+					condition: '',
+					price: 150,
+					gain: 15,
+				},
+				{ id: 84, name: 'organiser un fancon', bonusStatus: [AgenciesEnum.HR], condition: '', price: 190, gain: 19 },
+				{
+					id: 85,
+					name: 'participer à un festival',
+					bonusStatus: [AgenciesEnum.HR],
+					condition:
+						"les festivals sont considérés comme une tournée qu'à partir de 5 dates sur un même pays/continent.",
+					price: 150,
+					gain: 15,
+				},
+				{
+					id: 86,
+					name: 'tournée de concerts/festivals (asie)',
+					bonusStatus: [AgenciesEnum.HR],
+					condition: '',
+					price: 200,
+					gain: 20,
+				},
+				{
+					id: 87,
+					name: 'tournée de concerts/festivals (us & eu)',
+					bonusStatus: [AgenciesEnum.HR],
+					condition: 'palier 7.',
+					price: 400,
+					gain: 40,
+				},
+				{
+					id: 88,
+					name: 'tournée mondiale',
+					bonusStatus: [AgenciesEnum.HR],
+					condition: 'palier 11.',
+					price: 600,
+					gain: 60,
+				},
+				{
+					id: 89,
+					name: "participer au concert d'un artiste",
+					condition: 'attention, si ton personnage y participe sans son groupe, il doit avoir 4 étoiles en solo.',
+					price: 160,
+					gain: 16,
+				},
+			],
+		},
+	],
+}

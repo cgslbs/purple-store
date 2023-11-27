@@ -1,35 +1,42 @@
-import { AgenciesEnum } from '@/constants/agency';
-import { MantineColor } from '@mantine/core';
-import { Icon } from '@tabler/icons-react';
-import { StoreGroupsEnum } from '@/constants/store';
+import { AgenciesEnum } from '@/constants/agency'
+import { MantineColor } from '@mantine/core'
+import { Icon } from '@tabler/icons-react'
+import { StoreGroupsEnum, StoreSectionEnum } from '@/constants/store'
 
 export interface Item {
-  name: string;
-  requirement?: string;
-  isBooster: boolean;
-  bonusStatus?: AgenciesEnum[];
+	id: number
+	name: string
+	bonusStatus?: AgenciesEnum[]
 }
 
 export interface User {
-  defaultAgency: AgenciesEnum | null;
+	defaultAgency: AgenciesEnum | null
 }
 
-export interface FullItem extends Item {
-  price: number;
-  gain: number;
+export interface CompleteItem extends Item {
+	price: number
+	gain: number
+	condition?: string
+}
+
+export interface ItemBySection {
+	id: StoreSectionEnum
+	title: string
+	description?: string
+	items: CompleteItem[]
 }
 
 export interface StoreByGroup {
-  id: StoreGroupsEnum;
-  title: string;
-  items: FullItem[];
+	id: StoreGroupsEnum
+	title: string
+	sectionItems: ItemBySection[]
 }
 
-export type StoryByGroupTabs = Pick<StoreByGroup, 'id' | 'title'>;
+export type StoryByGroupTabs = Pick<StoreByGroup, 'id' | 'title'>
 
 export type AgencyItem = {
-  label: string;
-  value: AgenciesEnum;
-  icon: Icon;
-  color: MantineColor;
-};
+	label: string
+	value: AgenciesEnum
+	icon: Icon
+	color: MantineColor
+}
