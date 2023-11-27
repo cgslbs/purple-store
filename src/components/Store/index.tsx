@@ -1,7 +1,13 @@
-'use client';
+'use client'
 
-import { Container } from '@mantine/core';
+import { Container } from '@mantine/core'
+import { GroupStoreView } from './GroupStore'
 
 export function MainStore() {
-  return <Container size="md">{/* TODO: add the view handler */}</Container>;
+	// TODO: handle view according to current tab
+	return (
+		<Container size='md'>
+			<GroupStoreView />
+		</Container>
+	)
 }
