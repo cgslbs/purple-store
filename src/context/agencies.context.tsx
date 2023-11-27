@@ -1,54 +1,44 @@
-'use client';
-import { AgenciesEnum } from '@/constants/agency';
-import {
-  Dispatch,
-  ReactNode,
-  createContext,
-  useContext,
-  useReducer,
-} from 'react';
+'use client'
+import { AgenciesEnum } from '@/constants/agency'
+import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
 
 type StateType = {
-  defaultAgency: AgenciesEnum | null;
-};
+	defaultAgency: AgenciesEnum | null
+}
 
-type ActionType = AgenciesEnum | null;
+type ActionType = AgenciesEnum | null
 
 const initialState: StateType = {
-  defaultAgency: null,
-};
+	defaultAgency: null,
+}
 
 const reducer = (state: StateType, action: ActionType) => {
-  if (action !== null) {
-    return { ...state, defaultAgency: action };
-  }
-  return { ...state, defaultAgency: null };
-};
+	if (action !== null) {
+		return { ...state, defaultAgency: action }
+	}
+	return { ...state, defaultAgency: null }
+}
 
 type AgencyContextType = {
-  state: StateType;
-  dispatch: Dispatch<AgenciesEnum | null>;
-};
+	state: StateType
+	dispatch: Dispatch<AgenciesEnum | null>
+}
 
 export const AgencyContext = createContext<AgencyContextType>({
-  state: initialState,
-  dispatch: () => null,
-});
+	state: initialState,
+	dispatch: () => null,
+})
 
 type GroupProviderProps = {
-  children: ReactNode;
-};
+	children: ReactNode
+}
 
 export function AgencyContextProvider({ children }: GroupProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState)
 
-  return (
-    <AgencyContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AgencyContext.Provider>
-  );
+	return <AgencyContext.Provider value={{ state, dispatch }}>{children}</AgencyContext.Provider>
 }
 
 export function useAgencyContext() {
-  return useContext(AgencyContext);
+	return useContext(AgencyContext)
 }
