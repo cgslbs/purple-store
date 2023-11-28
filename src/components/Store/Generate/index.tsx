@@ -40,6 +40,7 @@ const ItemSelector = ({ idx, control, index }: ItemSelectorProps) => {
 			render={({ field }) => (
 				<Select
 					searchable
+					clearable
 					label='Item'
 					data={DEFAULT_ITEM.map((item) => ({
 						value: item.id.toString(),
