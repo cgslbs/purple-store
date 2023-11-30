@@ -1,12 +1,13 @@
 'use client'
 
-import { DEFAULT_ITEM } from '@/constants/item'
+import { DEFAULT_ITEM, SPECFIC_SECTION } from '@/constants/item'
 import { StoreGroupsEnum, StoreSectionEnum } from '@/constants/store'
 import { StoreByGroup } from '@/interfaces'
 import { CodeHighlight } from '@mantine/code-highlight'
 import {
 	ActionIcon,
 	Button,
+	Checkbox,
 	Container,
 	Flex,
 	Group,
@@ -17,7 +18,7 @@ import {
 	Textarea,
 } from '@mantine/core'
 import { IconTrash } from '@tabler/icons-react'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { Control, Controller, UseFormRegister, useFieldArray, useForm } from 'react-hook-form'
 
 type NestedTypeProps = {
@@ -59,9 +60,60 @@ const ItemSelector = ({ idx, control, index }: ItemSelectorProps) => {
 	)
 }
 
+const ItemOption = ({ idx, control, index }: ItemSelectorProps) => {
+	const [isSpecific, toggleSpecific] = useReducer((s) => !s, false)
+	const [doubleGain, toggleGain] = useReducer((s) => !s, false)
+	return (
+		<>
+			<Checkbox label='Is Specific' size='sm' checked={isSpecific} onChange={toggleSpecific} />
+			{isSpecific && <SpecificItem control={control} idx={idx} index={index} />}
+			<Checkbox label='has Double Gain' size='sm' checked={doubleGain} onChange={toggleGain} />
+			{doubleGain && (
+				<Controller
+					control={control}
+					name={`sectionItems.${index}.items.${idx}.doubleGain`}
+					render={({ field }) => (
+						<NumberInput
+							label='Double gain'
+							value={field.value}
+							onChange={(v) => {
+								field.onChange(Number(v))
+							}}
+						/>
+					)}
+				/>
+			)}
+		</>
+	)
+}
+
+const SpecificItem = ({ idx, control, index }: ItemSelectorProps) => {
+	return (
+		<Controller
+			control={control}
+			name={`sectionItems.${index}.items.${idx}.specificITem`}
+			render={({ field }) => (
+				<Select
+					searchable
+					clearable
+					label='Spécific section'
+					data={SPECFIC_SECTION.map((spe) => ({
+						value: spe.value.toString(),
+						label: spe.label,
+					}))}
+					value={field.value !== undefined ? field.value.toString() : ''}
+					onChange={(speEnum) => {
+						field.onChange(Number(speEnum))
+					}}
+				/>
+			)}
+		/>
+	)
+}
+
 const NestedItem = ({ control, index, register }: NestedTypeProps) => {
 	const defaultItem = DEFAULT_ITEM[0]
-	const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+	const { fields, append, remove } = useFieldArray({
 		control, // control props comes from useForm (optional: if you are using FormContext)
 		name: `sectionItems.${index}.items`, // unique name for your Field Array
 		// eslint-disable-next-line prettier/prettier
@@ -100,6 +152,20 @@ const NestedItem = ({ control, index, register }: NestedTypeProps) => {
 								/>
 							)}
 						/>
+						<Controller
+							control={control}
+							name={`sectionItems.${index}.items.${idx}.isBooster`}
+							render={({ field }) => (
+								<Checkbox
+									label='isBooster'
+									checked={field.value}
+									onChange={(s) => {
+										field.onChange(s)
+									}}
+								/>
+							)}
+						/>
+						<ItemOption idx={idx} index={index} control={control} />
 						<ActionIcon variant='outline' color='red' aria-label='Remove' onClick={() => remove(idx)}>
 							<IconTrash style={{ width: '70%', height: '70%' }} stroke={1.5} />
 						</ActionIcon>
@@ -109,7 +175,7 @@ const NestedItem = ({ control, index, register }: NestedTypeProps) => {
 			<Button
 				color='grape'
 				onClick={() => {
-					append({ ...defaultItem, gain: 0, price: 0 })
+					append({ ...defaultItem, isBooster: true, gain: 0, price: 0 })
 				}}>
 				Ajouter un item
 			</Button>
