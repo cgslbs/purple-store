@@ -1,3 +1,4 @@
+'use client'
 import { StoreGroupsEnum } from '@/constants/store'
 import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
 
@@ -5,10 +6,10 @@ type StoreGroupType = {
 	defaultStore: string
 }
 
-type StoreGroupAction = StoreGroupsEnum
+type StoreGroupAction = string
 
-const updateStore = (state: StoreGroupType, action: StoreGroupAction) => {
-	return { ...state, defaultStore: action.toString() }
+const updateStore = (state: StoreGroupType, action: string) => {
+	return { ...state, defaultStore: action }
 }
 
 type StoreContextType = {

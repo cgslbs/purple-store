@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core'
 import { AgencyContextProvider } from '@/context/agencies.context'
 import '@mantine/core/styles.css'
 import { CartContextProvider } from '@/context/cart.context'
+import { StoreContextProvider } from '@/context/store.context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={inter.className}>
 				<MantineProvider>
 					<AgencyContextProvider>
-						<CartContextProvider>{children}</CartContextProvider>
+						<StoreContextProvider>
+							<CartContextProvider>{children}</CartContextProvider>
+						</StoreContextProvider>
 					</AgencyContextProvider>
 				</MantineProvider>
 			</body>

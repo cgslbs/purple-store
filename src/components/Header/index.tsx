@@ -7,8 +7,9 @@ import { IconDoor, IconShoppingCart } from '@tabler/icons-react'
 import { useAgencyContext } from '@/context/agencies.context'
 import { AGENCIES, AgenciesEnum } from '@/constants/agency'
 import { AgencyItem } from '@/interfaces'
-import { DEFAULT_STORE_GROUP_TABS, GROUP_STORE_TABS, StoreGroupsEnum } from '@/constants/store'
+import { DEFAULT_STORE_GROUP_TABS, GROUP_STORE_TABS } from '@/constants/store'
 import { useCartContext } from '@/context/cart.context'
+import { useStoreContext } from '@/context/store.context'
 
 const CartIndicator = () => {
 	const { totalItems, toggleCart } = useCartContext()
@@ -24,6 +25,8 @@ const CartIndicator = () => {
 
 export function HeaderTabs() {
 	const { state, dispatch } = useAgencyContext()
+	const { groupStore, dispatch: storeDispatch } = useStoreContext()
+
 	const currentAgency = AGENCIES.find(
 		// eslint-disable-next-line prettier/prettier
 		(agency) => agency.value === state.defaultAgency
@@ -68,7 +71,11 @@ export function HeaderTabs() {
 			</Container>
 			<Container size='md'>
 				<Tabs
-					defaultValue={StoreGroupsEnum.SOLO.toString()}
+					value={groupStore.defaultStore}
+					onChange={(tab) => {
+						if (tab === null) return
+						storeDispatch(tab)
+					}}
 					variant='outline'
 					visibleFrom='sm'
 					classNames={{
