@@ -1,18 +1,25 @@
 'use client'
-import { Container, Group, Tabs, Burger, ActionIcon, Tooltip } from '@mantine/core'
+import { Container, Group, Tabs, Burger, ActionIcon, Tooltip, Indicator } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
 import classes from './header.module.css'
-import { IconDoor } from '@tabler/icons-react'
+import { IconDoor, IconShoppingCart } from '@tabler/icons-react'
 import { useAgencyContext } from '@/context/agencies.context'
 import { AGENCIES, AgenciesEnum } from '@/constants/agency'
 import { AgencyItem } from '@/interfaces'
 import { DEFAULT_STORE_GROUP_TABS, GROUP_STORE_TABS, StoreGroupsEnum } from '@/constants/store'
+import { useCartContext } from '@/context/cart.context'
 
-const user = {
-	name: 'Jane Spoonfighter',
-	email: 'janspoon@fighter.dev',
-	image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
+const CartIndicator = () => {
+	const { totalItems, toggleCart } = useCartContext()
+
+	return (
+		<Indicator radius={50} color='dark' inline label={totalItems} position='bottom-end' size={16}>
+			<ActionIcon color='dark' variant='outline' aria-label='Cart' onClick={() => toggleCart()}>
+				<IconShoppingCart size={16} />
+			</ActionIcon>
+		</Indicator>
+	)
 }
 
 export function HeaderTabs() {
@@ -53,6 +60,9 @@ export function HeaderTabs() {
 							color={defaultActionButton.color}>
 							<defaultActionButton.icon style={{ width: '70%', height: '70%' }} stroke={1.5} />
 						</ActionIcon>
+					</Tooltip>
+					<Tooltip label='Voir le panier'>
+						<CartIndicator />
 					</Tooltip>
 				</Group>
 			</Container>
