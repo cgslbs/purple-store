@@ -2,11 +2,11 @@ import { AgenciesEnum } from '@/constants/agency'
 import { MantineColor } from '@mantine/core'
 import { Icon } from '@tabler/icons-react'
 import { StoreGroupsEnum, StoreSectionEnum } from '@/constants/store'
+import { SpecificItemEnum } from '@/constants/item'
 
 export interface Item {
 	id: number
 	name: string
-	isBooster: boolean
 	bonusStatus?: AgenciesEnum[]
 }
 
@@ -17,7 +17,10 @@ export interface User {
 export interface CompleteItem extends Item {
 	price: number
 	gain: number
+	isBooster: boolean
+	doubleGain?: number
 	condition?: string
+	specificITem?: SpecificItemEnum
 	title?: string
 	artist?: string
 	link?: string
