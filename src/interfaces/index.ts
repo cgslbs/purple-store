@@ -6,6 +6,7 @@ import { StoreGroupsEnum, StoreSectionEnum } from '@/constants/store'
 export interface Item {
 	id: number
 	name: string
+	isBooster: boolean
 	bonusStatus?: AgenciesEnum[]
 }
 
@@ -17,6 +18,10 @@ export interface CompleteItem extends Item {
 	price: number
 	gain: number
 	condition?: string
+	title?: string
+	artist?: string
+	link?: string
+	releaseDate?: string
 }
 
 export interface ItemBySection {
