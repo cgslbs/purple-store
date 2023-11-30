@@ -3,13 +3,14 @@ import { StoreSectionEnum } from '@/constants/store'
 import { useAgencyContext } from '@/context/agencies.context'
 import { CartActionEnum, useCartContext } from '@/context/cart.context'
 import { CompleteItem } from '@/interfaces'
-import { Card, Group, Badge, Button, Text, ActionIcon } from '@mantine/core'
+import { Card, Group, Badge, Button, Text, ActionIcon, Tooltip, ThemeIcon } from '@mantine/core'
 import {
 	IconCoins,
 	IconBrandSpotify,
 	IconPhotoCirclePlus,
 	IconShoppingCartPlus,
 	IconShoppingCartMinus,
+	IconInfoCircle,
 } from '@tabler/icons-react'
 
 type CardItemProps = CompleteItem & {
@@ -17,7 +18,7 @@ type CardItemProps = CompleteItem & {
 }
 
 const CardItem = (item: CardItemProps) => {
-	const { price, gain, bonusStatus, condition, name, isBooster } = item
+	const { price, gain, bonusStatus, condition, name, isBooster, doubleGain } = item
 
 	const { state } = useAgencyContext()
 	const { dispatch, cart } = useCartContext()
@@ -29,35 +30,47 @@ const CardItem = (item: CardItemProps) => {
 	const cartHasItem = cart.find((i) => i.id === item.id)
 
 	return (
-		<Card w='30%' shadow='sm' style={{ justifyContent: 'space-between' }}>
-			<Text fw={500} size='lg' mt='md'>
+		<Card w='23%' shadow='sm'>
+			<Text fw={500} size='sm' mt='md' style={{ flexGrow: 2 }}>
 				{name}
 			</Text>
-
-			{condition!! && (
-				<Text mt='xs' c='dimmed' size='xs' style={{ flexGrow: 2 }}>
-					{condition}
-				</Text>
-			)}
-			<Group p='xs' align='flex-end' justify='flex-end' style={{ flexGrow: 2 }}>
-				<Badge
-					size='md'
-					variant='gradient'
-					gradient={{ from: 'violet', to: 'cyan', deg: 273 }}
-					rightSection={<IconCoins size='12' />}>
-					{price}
-				</Badge>
-				<Badge
-					size='md'
-					color={hasBonus ? `${agencyColor}` : 'teal'}
-					rightSection={isBooster ? <IconBrandSpotify size='12' /> : <IconPhotoCirclePlus size='12' />}>
-					{currentGain}
-				</Badge>
+			<Group p='xs' align='flex-end' justify='space-between'>
+				{condition!! && (
+					<Tooltip label={condition}>
+						<ThemeIcon variant='light' radius='lg' size='sm' color='gray'>
+							<IconInfoCircle />
+						</ThemeIcon>
+					</Tooltip>
+				)}
+				<Group style={{ flexGrow: 2 }} align='flex-end' justify='flex-end'>
+					<Badge
+						size='xs'
+						variant='gradient'
+						gradient={{ from: 'violet', to: 'cyan', deg: 273 }}
+						rightSection={<IconCoins size='12' />}>
+						{price}
+					</Badge>
+					<Badge
+						size='xs'
+						color={hasBonus ? `${agencyColor}` : 'teal'}
+						rightSection={isBooster ? <IconBrandSpotify size='12' /> : <IconPhotoCirclePlus size='12' />}>
+						{currentGain}
+					</Badge>
+					{!!doubleGain && (
+						<Badge
+							size='xs'
+							color={hasBonus ? `${agencyColor}` : 'teal'}
+							rightSection={<IconPhotoCirclePlus size='12' />}>
+							{doubleGain}
+						</Badge>
+					)}
+				</Group>
 			</Group>
 			{cartHasItem !== undefined ? (
 				<Group grow>
 					<ActionIcon
 						variant='light'
+						radius='lg'
 						color='red'
 						onClick={() => {
 							if (cartHasItem.quantity === 1) {
@@ -68,10 +81,11 @@ const CardItem = (item: CardItemProps) => {
 						}}>
 						<IconShoppingCartMinus size={16} />
 					</ActionIcon>
-					<Badge variant='light' color='teal'>
+					<Badge size='lg' variant='light' color='teal'>
 						{cartHasItem.quantity}
 					</Badge>
 					<ActionIcon
+						radius='lg'
 						variant='light'
 						color='lime'
 						onClick={() => dispatch({ type: CartActionEnum.INCREASE_QTY, payload: cartHasItem })}>
@@ -80,6 +94,7 @@ const CardItem = (item: CardItemProps) => {
 				</Group>
 			) : (
 				<Button
+					size='xs'
 					color='teal'
 					variant='light'
 					fullWidth
