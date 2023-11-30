@@ -146,6 +146,7 @@ type CartContextType = {
 	totalPrice: number
 	totalGain: number
 	totalStream: number
+	totalDoubleGain: number
 	cart: CartItemType[]
 	isOpened: boolean
 	toggleCart: () => void
@@ -157,6 +158,7 @@ const initCartContextState: CartContextType = {
 	totalItems: 0,
 	totalPrice: 0,
 	totalGain: 0,
+	totalDoubleGain: 0,
 	totalStream: 0,
 	cart: [],
 	isOpened: false,
@@ -189,13 +191,19 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 	const totalGain = state.cart
 		.filter((i) => !i.isBooster)
 		.reduce((previousValue, cartItem) => {
-			return previousValue + cartItem.gain
+			return previousValue + cartItem.gain * cartItem.quantity
 		}, 0)
 
 	const totalStream = state.cart
 		.filter((i) => i.isBooster)
 		.reduce((previousValue, cartItem) => {
-			return previousValue + cartItem.gain
+			return previousValue + cartItem.gain * cartItem.quantity
+		}, 0)
+
+	const totalDoubleGain = state.cart
+		.filter((i) => i.isBooster && !!i.doubleGain)
+		.reduce((previousValue, cartItem) => {
+			return previousValue + cartItem.doubleGain! * cartItem.quantity
 		}, 0)
 
 	const cart = state.cart.sort((a, b) => {
@@ -206,7 +214,18 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
 	return (
 		<CartContext.Provider
-			value={{ dispatch, REDUCER_ACTIONS, totalItems, totalGain, totalStream, totalPrice, cart, isOpened, toggleCart }}>
+			value={{
+				dispatch,
+				REDUCER_ACTIONS,
+				totalItems,
+				totalDoubleGain,
+				totalGain,
+				totalStream,
+				totalPrice,
+				cart,
+				isOpened,
+				toggleCart,
+			}}>
 			{children}
 		</CartContext.Provider>
 	)
