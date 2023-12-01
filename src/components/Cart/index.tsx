@@ -119,9 +119,9 @@ const TotalCodeHighlight = () => {
 				if (i.title && i.link) {
 					itemDetail += ` ([url=${i.link}]${i.title}[/url] )`
 				}
-				itemsHistory += `${i.name}${i.quantity > 1 && ` *${i.quantity}`},${itemDetail} <xp>${i.gain * i.quantity}</xp>${
-					idx != cart.length - 1 && `\n`
-				}`
+				itemsHistory += `${i.name}${i.quantity > 1 ? ` *${i.quantity}` : ''},${itemDetail} <xp>${
+					i.gain * i.quantity
+				}</xp>${idx != cart.length - 1 ? `\n` : ``}`
 			})
 
 		const doubleGainItems = cart.filter((i) => i.isBooster && i.doubleGain !== undefined)
@@ -139,7 +139,7 @@ const TotalCodeHighlight = () => {
 						itemDetail += ` ('${i.title}', ${i.artist} - ${i.releaseDate})`
 					}
 					itemsHistory += `${i.name},${itemDetail} <xp>${i.doubleGain! * i.quantity}</xp>${
-						idx != doubleGainItems.length && `\n`
+						idx != doubleGainItems.length ? `\n` : ``
 					}`
 				})
 			}
