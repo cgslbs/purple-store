@@ -2,6 +2,9 @@ name: CICD Self Hosted
 
 # When this action will be executed
 on:
+  push:
+    branches:
+      - master
   # Allow mannually trigger 
   workflow_dispatch:
    
@@ -38,9 +41,10 @@ jobs:
               echo "Stopped Application Pool NextApp"
           }
   
-          Start-Sleep -s 15        
-          Copy-Item ${{env.DOTNET_ROOT}}/actions-runner/_work/purple-store/purple-store* C:/website -Recurse -Force
-  
+          Start-Sleep -s 15
+          echo "Copying files"
+          Copy-Item ${{env.DOTNET_ROOT}}/actions-runner/_work/purple-store/purple-store/* C:/website -Recurse -Force
+          echo "Copied ! Starting website..."
           if ((Get-WebSiteState -Name NextApp).Value -eq "Stopped")
           {
               Start-WebSite -Name NextApp
