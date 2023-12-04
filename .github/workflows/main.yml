@@ -1,0 +1,15 @@
+name: Trigger auto deployment for workcare
+
+# When this action will be executed
+on:
+  # Allow mannually trigger 
+  workflow_dispatch:
+   
+          
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
