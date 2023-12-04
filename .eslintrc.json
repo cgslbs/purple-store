@@ -1,5 +1,5 @@
 {
-	"extends": ["next", "next/core-web-vitals", "plugin:prettier/recommended"],
+	"extends": ["next", "next/core-web-vitals", "prettier", "plugin:prettier/recommended"],
 	"rules": {
 		"react/jsx-uses-react": "warn",
 		"react/jsx-uses-vars": "warn",
