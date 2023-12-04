@@ -186,14 +186,14 @@ const NestedItem = ({ control, index, register }: NestedTypeProps) => {
 export function StoreGenerator() {
 	// CREATE DATA DYNAMICALLY
 	const [store, setStore] = useState('')
-	const { register, control, handleSubmit, watch } = useForm<StoreByGroup>({
+	const { register, control, handleSubmit } = useForm<StoreByGroup>({
 		defaultValues: {
 			title: 'Boutique groupe',
 			id: StoreGroupsEnum.GROUP,
 			sectionItems: [],
 		},
 	})
-	const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+	const { fields, append, remove } = useFieldArray({
 		control, // control props comes from useForm (optional: if you are using FormContext)
 		name: 'sectionItems', // unique name for your Field Array
 		// eslint-disable-next-line prettier/prettier
