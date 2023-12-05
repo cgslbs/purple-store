@@ -4,6 +4,7 @@ import { CartActionEnum, CartItemType, useCartContext } from '@/context/cart.con
 import { CodeHighlight } from '@mantine/code-highlight'
 import {
 	ActionIcon,
+	Anchor,
 	Button,
 	Group,
 	NumberFormatter,
@@ -162,6 +163,7 @@ type OptionFormProps = {
 const OptionForm = ({ item, isSongForm, toggleOption }: OptionFormProps) => {
 	const { register, getValues } = useForm<CartItemType>({ defaultValues: item })
 	const { dispatch } = useCartContext()
+
 	return (
 		<Stack gap='xs'>
 			<TextInput size='xs' label={`${isSongForm ? `Nom de la chanson` : `Titre`} `} {...register('title')} />
@@ -174,7 +176,7 @@ const OptionForm = ({ item, isSongForm, toggleOption }: OptionFormProps) => {
 					size='xs'
 					leftSection={<IconLink size={12} />}
 					label='Lien url'
-					placeholder='mois année'
+					placeholder='url here'
 					{...register('link')}
 				/>
 			)}
@@ -183,7 +185,8 @@ const OptionForm = ({ item, isSongForm, toggleOption }: OptionFormProps) => {
 					style={{ flexGrow: 2 }}
 					size='xs'
 					onClick={() => {
-						dispatch({ type: CartActionEnum.ADD_SONG, payload: getValues() })
+						if (isSongForm) dispatch({ type: CartActionEnum.ADD_SONG, payload: getValues() })
+						if (!isSongForm) dispatch({ type: CartActionEnum.ADD_LINK, payload: getValues() })
 						toggleOption()
 					}}>
 					Enregistrer
@@ -200,7 +203,6 @@ const OptionForm = ({ item, isSongForm, toggleOption }: OptionFormProps) => {
 
 const CartItem = (item: CartItemType) => {
 	const { dispatch } = useCartContext()
-
 	const [showOption, toggleOption] = useReducer((s) => !s, false)
 	const [isSong, setIsSong] = useState(false)
 
@@ -214,10 +216,15 @@ const CartItem = (item: CartItemType) => {
 					<NumberFormatter suffix={'xp'} value={item.doubleGain} thousandSeparator />
 				)}
 			</Text>
-			{!!item.title && (
+			{!!item.title && item.artist && (
 				<Text fs='italic' size='xs'>
 					{item.title}, {item.artist} - {item.releaseDate}
 				</Text>
+			)}
+			{!!item.title && !!item.link && (
+				<Anchor size='xs' href={item.link} target='_blank' underline='never'>
+					{item.title}
+				</Anchor>
 			)}
 			{!showOption && !item.isBooster && (
 				<Group>
