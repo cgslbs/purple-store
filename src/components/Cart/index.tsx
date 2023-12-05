@@ -65,12 +65,12 @@ const TotalCodeHighlight = () => {
 		let items = ''
 		cart.map((item) => {
 			items += `${item.name}, ${item.price}pts & ${item.gain} ${item.isBooster ? `streams` : `xp`} ${
-				item.isBooster && item.doubleGain !== undefined && `+ ${item.doubleGain}xp`
+				item.isBooster && item.doubleGain !== undefined ? `+ ${item.doubleGain}xp` : ``
 			}${
 				item.quantity > 1
-					? ` *${item.quantity} = ${item.price * item.quantity}pts & ${item.gain * item.quantity}${
+					? `*${item.quantity} = ${item.price * item.quantity}pts & ${item.gain * item.quantity}${
 							item.isBooster ? ` streams` : `xp`
-					  } ${item.isBooster && item.doubleGain !== undefined && `+ ${item.doubleGain * item.quantity}xp`}`
+					  } ${item.isBooster && item.doubleGain !== undefined ? `+ ${item.doubleGain * item.quantity}xp` : ``}`
 					: ``
 			}\n`
 		})
@@ -121,7 +121,7 @@ const TotalCodeHighlight = () => {
 				}
 				itemsHistory += `${i.name}${i.quantity > 1 ? ` *${i.quantity}` : ''},${itemDetail} <xp>${
 					i.gain * i.quantity
-				}</xp>${idx != cart.length - 1 ? `\n` : ``}`
+				}</xp>${idx !== cart.length - 1 ? ` \n` : ``}`
 			})
 
 		const doubleGainItems = cart.filter((i) => i.isBooster && i.doubleGain !== undefined)
@@ -175,7 +175,7 @@ const OptionForm = ({ item, isSongForm, toggleOption }: OptionFormProps) => {
 					leftSection={<IconLink size={12} />}
 					label='Lien url'
 					placeholder='mois année'
-					{...register('releaseDate')}
+					{...register('link')}
 				/>
 			)}
 			<Group>
