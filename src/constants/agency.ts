@@ -7,7 +7,6 @@ import {
 	IconFlower,
 	IconMountain,
 	IconRainbow,
-	IconSparkles,
 	IconSunset2,
 } from '@tabler/icons-react'
 
@@ -18,7 +17,6 @@ export enum AgenciesEnum {
 	XY = 'XINGYUAN',
 	HR = 'HORIZONRECORD',
 	MC = 'MYSTIC',
-	FL = 'FREELANCE',
 	A7 = 'ACT7',
 	INDIE = 'INDIE',
 }
@@ -67,15 +65,9 @@ export const AGENCIES: AgencyItem[] = [
 		color: 'red',
 	},
 	{
-		label: 'INDÉPENDANTS',
+		label: 'INDÉPENDANTS & FREELANCE',
 		value: AgenciesEnum.INDIE,
 		icon: IconFlame,
-		color: 'pink',
-	},
-	{
-		label: 'FREELANCE',
-		value: AgenciesEnum.FL,
-		icon: IconSparkles,
 		color: 'indigo',
 	},
 ]

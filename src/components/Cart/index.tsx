@@ -152,7 +152,7 @@ const TotalCodeHighlight = () => {
 
 	const code = `${itemList()}\n${total()}\n${historyCode()}`
 
-	return <CodeHighlight c='dark' style={{ backgroundColor: theme.colors.gray[1] }} code={code} />
+	return <CodeHighlight c='dark' style={{ backgroundColor: theme.colors.gray[1] }} code={code} language='tsx' />
 }
 
 type OptionFormProps = {

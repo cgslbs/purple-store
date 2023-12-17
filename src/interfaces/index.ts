@@ -48,3 +48,36 @@ export type AgencyItem = {
 	icon: Icon
 	color: MantineColor
 }
+
+export type AgencyYtbProps = {
+	channelName: string
+	imgIcon: string
+	subscribers: string
+}
+
+export type ParticipantCategory = 'MT' | 'IDOL' | 'STAFF' | 'TRAINEE' | 'AUTO-PROD'
+
+export type SongParticipant = {
+	fullname: string
+	category?: ParticipantCategory
+	qty: number
+	rating: number
+}
+
+export type SongRateType = {
+	releaseDate: string
+	songTitle: string
+	artist: string
+	ytb_code: string
+	img_url: string
+	artistRate: number
+	participant?: SongParticipant[]
+	featArtist?: SongParticipant[]
+	collabArtist?: SongParticipant[]
+}
+
+export type SongRateStreams = {
+	defaultStreams: number
+	bonusStreams: number
+	streamByParticipant?: number
+}

@@ -21,7 +21,6 @@ export function StoreView() {
 		switch (groupStore.defaultStore) {
 			case StoreGroupsEnum.ACTING.toString():
 				return DEFAULT_STORE_ACTING
-
 			case StoreGroupsEnum.MODEL.toString():
 				return DEFAULT_STORE_MODEL
 			case StoreGroupsEnum.SOLO.toString():
