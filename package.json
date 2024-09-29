@@ -13,11 +13,13 @@
     "@mantine/core": "^7.2.0",
     "@mantine/hooks": "^7.2.0",
     "@tabler/icons-react": "^2.40.0",
+    "axios": "^1.7.7",
     "moment": "^2.29.4",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.48.2"
+    "react-hook-form": "^7.48.2",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@types/node": "^20",
