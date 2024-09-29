@@ -48,3 +48,9 @@ export type AgencyItem = {
 	icon: Icon
 	color: MantineColor
 }
+
+export interface IAgency {
+	id: number
+	code: string
+	name: string
+}
