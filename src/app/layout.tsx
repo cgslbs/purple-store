@@ -5,6 +5,8 @@ import '@mantine/core/styles.css'
 import { Playfair_Display, Gruppo } from 'next/font/google'
 import { theme } from '@/styles/theme'
 import GlobalContext from '@/context/global.context'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import ReactQueryProvider from '@/utils/ReactQueryProvider'
 
 // Google font here
 const playfairDisplay = Playfair_Display({
@@ -29,9 +31,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='fr'>
 			<body className={`${playfairDisplay.variable} ${gruppo.variable}`}>
-				<MantineProvider theme={theme}>
-					<GlobalContext>{children}</GlobalContext>
-				</MantineProvider>
+				<ReactQueryProvider>
+					<MantineProvider theme={theme}>
+						<GlobalContext>{children}</GlobalContext>
+					</MantineProvider>
+				</ReactQueryProvider>
 			</body>
 		</html>
 	)
