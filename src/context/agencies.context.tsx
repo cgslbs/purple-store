@@ -14,10 +14,10 @@ const initialState: StateType = {
 
 const reducer = (state: StateType, action: ActionType) => {
 	if (action !== null) {
-		localStorage.setItem('agencyCode', action)
+		localStorage.setItem('agency_code', action)
 		return { ...state, defaultAgency: action }
 	}
-	localStorage.setItem('agencyCode', '')
+	localStorage.setItem('agency_code', '')
 	return { ...state, defaultAgency: null }
 }
 
