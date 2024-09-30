@@ -2,10 +2,9 @@ import type { Metadata } from 'next'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
 
-import { Playfair_Display, Gruppo } from 'next/font/google'
+import { Gruppo, Playfair_Display } from 'next/font/google'
 import { theme } from '@/styles/theme'
 import GlobalContext from '@/context/global.context'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import ReactQueryProvider from '@/utils/ReactQueryProvider'
 
 // Google font here
