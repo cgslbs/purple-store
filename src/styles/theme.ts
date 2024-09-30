@@ -4,14 +4,13 @@ import { createTheme } from '@mantine/core'
 export const theme = createTheme({
 	focusRing: 'never',
 	headings: {
-		fontFamily: 'var(--font-playfair)',
+		fontFamily: 'Playfair display',
 		sizes: {
 			h1: { fontSize: '4rem' },
 		},
 	},
 	primaryColor: 'violet',
 	colors: {
-		// or replace default theme color
 		blue: [
 			'#F2F5F9',
 			'#D7E0EC',
