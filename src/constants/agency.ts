@@ -1,81 +1,56 @@
-import { AgencyItem } from '@/interfaces'
 import {
 	IconBolt,
 	IconChairDirector,
 	IconComet,
-	IconFlame,
 	IconFlower,
+	IconMatchstick,
 	IconMountain,
 	IconRainbow,
 	IconSparkles,
-	IconSunset2,
 } from '@tabler/icons-react'
 
-export enum AgenciesEnum {
-	MT = 'MOUNTAINTOP',
-	WM = 'WISHMAKER',
-	GN = 'GNATION',
-	XY = 'XINGYUAN',
-	HR = 'HORIZONRECORD',
-	MC = 'MYSTIC',
-	FL = 'FREELANCE',
-	A7 = 'ACT7',
-	INDIE = 'INDIE',
-}
-
-export const AGENCIES: AgencyItem[] = [
-	{
-		label: 'ACT.7',
-		value: AgenciesEnum.A7,
+export const AGENCY_ICON_KEYS = {
+	A7: {
 		icon: IconChairDirector,
 		color: 'dark',
 	},
-	{
-		label: 'MOUNTAIN TOP',
-		value: AgenciesEnum.MT,
+	MT: {
 		icon: IconMountain,
 		color: 'orange',
 	},
-	{
-		label: 'G.NATION',
-		value: AgenciesEnum.GN,
+	GN: {
 		icon: IconBolt,
 		color: 'lime',
 	},
-	{
-		label: 'WISHMAKER',
-		value: AgenciesEnum.WM,
+	WM: {
 		icon: IconComet,
 		color: 'cyan',
 	},
-	{
-		label: 'HORIZON RECORDS',
-		value: AgenciesEnum.HR,
-		icon: IconSunset2,
-		color: 'violet',
-	},
-	{
-		label: 'MYSTIC',
-		value: AgenciesEnum.MC,
+	MC: {
 		icon: IconRainbow,
 		color: 'grape',
 	},
-	{
-		label: 'XINGYUAN',
-		value: AgenciesEnum.XY,
-		icon: IconFlower,
+	XY: {
 		color: 'red',
+		icon: IconFlower,
 	},
-	{
-		label: 'INDÉPENDANTS',
-		value: AgenciesEnum.INDIE,
-		icon: IconFlame,
-		color: 'pink',
+	INDIE: {
+		color: 'yellow',
+		icon: IconMatchstick,
 	},
-	{
-		label: 'FREELANCE',
-		value: AgenciesEnum.FL,
-		icon: IconSparkles,
+	FL: {
 		color: 'indigo',
+		icon: IconSparkles,
 	},
-]
+}
+
+export enum AgencyCodeEnum {
+	A7 = 'A7',
+	FREELANCE = 'FL',
+	INDIE = 'INDIE',
+	XY = 'XY',
+	MT = 'MT',
+	GN = 'GN',
+	WM = 'WM',
+	MC = 'MC',
+}
