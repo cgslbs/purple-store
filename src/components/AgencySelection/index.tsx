@@ -1,7 +1,7 @@
 'use client'
 
 import { useAgency } from './AgencySelection.queries'
-import { ActionIcon, Grid, Modal, Stack, Text, UnstyledButton } from '@mantine/core'
+import { Grid, Modal, Stack, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
 import { IconDoor } from '@tabler/icons-react'
 import { useContext } from 'react'
 import { AgencyContext } from '@/context/agencies.context'
@@ -43,14 +43,14 @@ export default function AgencySelection() {
 								<Grid.Col key={agency.id} span={4}>
 									<UnstyledButton onClick={() => onAgencySelection(agency.code)} w={'100%'}>
 										<Stack gap={'0.5rem'} align='center' justify='center' w={'100%'} h={'100%'}>
-											<ActionIcon
+											<ThemeIcon
 												variant='filled'
 												size='xl'
 												radius='xl'
 												aria-label={agency.name}
 												color={currAgency?.[1].color}>
 												<Icon />
-											</ActionIcon>
+											</ThemeIcon>
 											<Text fw={500} ta={'center'}>
 												{agency.name}
 											</Text>
