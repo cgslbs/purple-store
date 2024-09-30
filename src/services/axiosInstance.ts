@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-	baseURL: 'http://purplestore-api.hybrid-games.fr',
+	baseURL: 'https://purplestore-api.hybrid-games.fr',
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
