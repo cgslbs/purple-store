@@ -1,11 +1,11 @@
 import {
-	IconBolt,
 	IconChairDirector,
 	IconComet,
+	IconDiamond,
 	IconFlower,
 	IconMatchstick,
 	IconMountain,
-	IconRainbow,
+	IconPlant2,
 	IconSparkles,
 } from '@tabler/icons-react'
 
@@ -19,7 +19,7 @@ export const AGENCY_ICON_KEYS = {
 		color: 'orange',
 	},
 	GN: {
-		icon: IconBolt,
+		icon: IconDiamond,
 		color: 'lime',
 	},
 	WM: {
@@ -27,7 +27,7 @@ export const AGENCY_ICON_KEYS = {
 		color: 'cyan',
 	},
 	MC: {
-		icon: IconRainbow,
+		icon: IconSparkles,
 		color: 'grape',
 	},
 	XY: {
@@ -40,7 +40,7 @@ export const AGENCY_ICON_KEYS = {
 	},
 	FL: {
 		color: 'indigo',
-		icon: IconSparkles,
+		icon: IconPlant2,
 	},
 }
 
