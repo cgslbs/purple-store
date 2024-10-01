@@ -1,6 +1,6 @@
-import StoreView from '@/components/StoreView'
+import Stores from '@/components/Stores'
 import React from 'react'
 
 export default function StorePage() {
-	return <StoreView />
+	return <Stores />
 }

@@ -4,8 +4,12 @@ import { Accordion, Badge, Button, Card, Group, Stack, Text } from '@mantine/cor
 import { IconArrowBadgeUpFilled, IconCoin, IconInfoCircle } from '@tabler/icons-react'
 import { useState } from 'react'
 import classes from './ItemCard.module.css'
+import { useCartContext } from '@/context/cart.context'
 
 export default function ItemCard(item: IItem) {
+	const currAgency = localStorage.getItem('agency_code')
+	const { dispatch, cart } = useCartContext()
+
 	const [accordionValue, setAccordionValue] = useState<string | null>(null)
 
 	return (
