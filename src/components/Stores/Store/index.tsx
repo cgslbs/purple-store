@@ -2,17 +2,37 @@
 import { StoreProps } from './Store.types'
 import { ActionIcon, Button, Grid, Stack, Text, TextInput, Title } from '@mantine/core'
 import { IconArrowRight, IconSearch } from '@tabler/icons-react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import ItemCard from '../ItemCard'
+import { useMemo } from 'react'
 
 export default function Store({ store }: StoreProps) {
-	// TODO: handle the search functionality
 	const searchForm = useForm<{ search: string }>()
+	const currSearch = useWatch({
+		control: searchForm.control,
+		name: 'search',
+	})
+
+	const filteredSearch = useMemo(() => {
+		if (currSearch !== undefined) {
+			// filter items
+			return store.category.map((category) => {
+				return {
+					...category,
+					items: category.items.filter((item) =>
+						item.name.trim().toLowerCase().includes(currSearch.trim().toLowerCase())
+					),
+				}
+			})
+		}
+
+		return store.category
+	}, [currSearch, store.category])
 
 	return (
 		<Stack py='lg' gap='lg'>
 			<Button.Group>
-				{store.category.map((category) => {
+				{filteredSearch.map((category) => {
 					return (
 						<Button variant='light' component='a' key={`anchor_${category.id}`} href={`#${category.id}`} fullWidth>
 							{category.name}
@@ -33,7 +53,7 @@ export default function Store({ store }: StoreProps) {
 				}
 				{...searchForm.register('search')}
 			/>
-			{store.category.map((category) => {
+			{filteredSearch.map((category) => {
 				return (
 					<Stack id={category.id.toString()} key={category.id} gap={'sm'}>
 						<Title order={1} size={'1.5rem'} tt='uppercase'>
