@@ -11,12 +11,15 @@ import {
 	Stack,
 	Table,
 	Text,
+	TextInput,
 	Title,
 } from '@mantine/core'
 import { IconArrowBack, IconMinus, IconPlus, IconX } from '@tabler/icons-react'
 import { ItemGainType } from '@/constants/item'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form'
+import { ProjectItemProps, ProjectItemType, ProjectTypeEnum, defaultProjectItem } from './Cart.types'
+import { useState } from 'react'
 
 const RemoveItem = (item: CartItemType) => {
 	const { dispatch } = useCartContext()
@@ -103,11 +106,77 @@ const Total = () => {
 	)
 }
 
+const ProjectItem = ({ index }: ProjectItemProps) => {
+	const { control, register } = useFormContext()
+	const [projectType, setProjectType] = useState(ProjectTypeEnum.NULL)
+
+	if (projectType === ProjectTypeEnum.NULL) {
+		return (
+			<Button.Group orientation='vertical'>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.RELEASE)
+					}}>
+					Chanson
+				</Button>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.PRODUCTION)
+					}}>
+					Production
+				</Button>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.DRAMA)
+					}}>
+					Drama
+				</Button>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.CF_PHOTOSHOOT)
+					}}>
+					CF / Photoshoot
+				</Button>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.AMBASSADOR_FACE_CONTRACT)
+					}}>
+					Contrat Ambassadeur / Face
+				</Button>
+				<Button
+					onClick={() => {
+						setProjectType(ProjectTypeEnum.OTHER)
+					}}>
+					Autres
+				</Button>
+			</Button.Group>
+		)
+	}
+
+	return (
+		<Stack>
+			<TextInput label='Titre' />
+			<TextInput label='Artiste' />
+			<TextInput label='Célébrité' />
+			<TextInput label='Marque' />
+			<TextInput label='Magazine' />
+			<TextInput label='Date' />
+			<TextInput label='URL' />
+			{/* ADD MULTISELECT */}
+		</Stack>
+	)
+}
+
 export default function ShoppingCart() {
 	const router = useRouter()
 	const { cart } = useCartContext()
 
-	const projectForm = useForm()
+	const formProject = useForm<{ projects: ProjectItemType[] }>()
+
+	const { fields, append, remove } = useFieldArray({
+		control: formProject.control,
+		name: 'projects',
+	})
 
 	return (
 		<Container>
@@ -148,11 +217,19 @@ export default function ShoppingCart() {
 						<Total />
 					</Group>
 				</Stack>
-				<Stack>
-					<Title order={1} size={'2.25rem'}>
-						Project.
-					</Title>
-				</Stack>
+				<FormProvider {...formProject}>
+					<Stack>
+						<Title order={1} size={'2.25rem'}>
+							Projects.
+							<Stack>
+								{fields.map((project, idx) => {
+									return <ProjectItem key={`key_project_${project.id}`} index={idx} />
+								})}
+								<Button onClick={() => append(defaultProjectItem)}></Button>
+							</Stack>
+						</Title>
+					</Stack>
+				</FormProvider>
 			</Group>
 		</Container>
 	)
