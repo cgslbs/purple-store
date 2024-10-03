@@ -57,7 +57,7 @@ export interface IItem {
 	gainType: ItemGainType
 	price: number
 	gain: number
-	doubleGain: number
+	doubleGain: number | null
 	condition: string
 }
 

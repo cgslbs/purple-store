@@ -1,3 +1,5 @@
+import ShoppingCart from '@/components/Cart'
+
 export default function CartPage() {
-	return <div> Bonjour le cart</div>
+	return <ShoppingCart />
 }
