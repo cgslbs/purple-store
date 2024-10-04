@@ -49,9 +49,7 @@ export default function Header() {
 							<Icon style={{ width: '70%', height: '70%' }} stroke={1.5} />
 						</ActionIcon>
 					</Tooltip>
-					<Tooltip label='Voir le panier'>
-						<CartIndicator />
-					</Tooltip>
+					<CartIndicator />
 				</Group>
 			</Container>
 		</div>

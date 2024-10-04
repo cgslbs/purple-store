@@ -53,9 +53,9 @@ export default function Store({ store }: StoreProps) {
 				}
 				{...searchForm.register('search')}
 			/>
-			{filteredSearch.map((category) => {
+			{filteredSearch.map((category, idx) => {
 				return (
-					<Stack id={category.id.toString()} key={category.id} gap={'sm'}>
+					<Stack id={category.id.toString()} key={`KEY_CATEGORY_${category.id}_${idx}`} gap={'sm'}>
 						<Title order={1} size={'1.5rem'} tt='uppercase'>
 							{category.name}
 						</Title>
@@ -63,9 +63,9 @@ export default function Store({ store }: StoreProps) {
 							{category.description}
 						</Text>
 						<Grid justify='flex-start' align='stretch'>
-							{category.items.map((item) => (
-								<Grid.Col key={item.id} span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
-									<ItemCard {...item} />
+							{category.items.map((item, idx) => (
+								<Grid.Col key={`KEY_COL_${category.id}_${item.id}_${idx}`} span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
+									<ItemCard {...item} idx={idx} />
 								</Grid.Col>
 							))}
 						</Grid>

@@ -40,7 +40,7 @@ export default function AgencySelection() {
 							const currAgency = Object.entries(AGENCY_ICON_KEYS).find(([keys, _value]) => keys === agency.code)
 							const Icon = currAgency !== undefined ? currAgency[1].icon : IconDoor
 							return (
-								<Grid.Col key={agency.id} span={4}>
+								<Grid.Col key={`AGENCY_KEY_${agency.id}_${agency.code}`} span={4}>
 									<UnstyledButton onClick={() => onAgencySelection(agency.code)} w={'100%'}>
 										<Stack gap={'0.5rem'} align='center' justify='center' w={'100%'} h={'100%'}>
 											<ThemeIcon

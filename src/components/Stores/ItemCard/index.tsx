@@ -14,7 +14,11 @@ import classes from './ItemCard.module.css'
 import { CartActionEnum, useCartContext } from '@/context/cart.context'
 import { ItemGainType } from '@/constants/item'
 
-export default function ItemCard(item: IItem) {
+type ItemProps = IItem & {
+	idx: number
+}
+
+export default function ItemCard(item: ItemProps) {
 	const { dispatch, cart } = useCartContext()
 	const [accordionValue, setAccordionValue] = useState<string | null>(null)
 	const itemInCart = cart.find((i) => i.id === item.id)
@@ -27,7 +31,7 @@ export default function ItemCard(item: IItem) {
 				</Text>
 				{item.condition !== '' && (
 					<Accordion value={accordionValue} onChange={setAccordionValue}>
-						<Accordion.Item key={item.id} value={item.id.toString()}>
+						<Accordion.Item key={`KEY_ACCORDION_${item.id}_${item.idx}`} value={item.id.toString()}>
 							<Accordion.Control icon={<IconInfoCircle size={'1rem'} />}>Condition</Accordion.Control>
 							<Accordion.Panel>{item.condition}</Accordion.Panel>
 						</Accordion.Item>

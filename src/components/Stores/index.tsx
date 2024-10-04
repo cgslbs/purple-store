@@ -34,7 +34,10 @@ export default function Stores() {
 							{data.map((store) => {
 								const splitStoreName = store.name.substring(8, store.name.length)
 								return (
-									<Tabs.Tab key={store.id} value={store.id.toString()} leftSection={<IconReceipt2 size={'1rem'} />}>
+									<Tabs.Tab
+										key={`KEY_TAB_${store.id}`}
+										value={store.id.toString()}
+										leftSection={<IconReceipt2 size={'1rem'} />}>
 										{splitStoreName.toUpperCase()}
 									</Tabs.Tab>
 								)
@@ -42,7 +45,7 @@ export default function Stores() {
 						</Tabs.List>
 						{data.map((store) => {
 							return (
-								<Tabs.Panel key={store.id} value={store.id.toString()}>
+								<Tabs.Panel key={`KEY_TABPANEL_${store.id}`} value={store.id.toString()}>
 									<Stack gap='lg'>
 										<Store store={store} />
 									</Stack>
