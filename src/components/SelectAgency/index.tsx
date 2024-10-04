@@ -1,12 +1,10 @@
-'use client'
-
 import { AGENCIES } from '@/constants/agency'
-import { AgencyContext } from '@/context/agencies.context'
+import { useAgencyContext } from '@/context/agencies.context'
 import { ActionIcon, Modal, SimpleGrid, Stack, Tooltip } from '@mantine/core'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 
 export default function SelectAgency() {
-	const { state, dispatch } = useContext(AgencyContext)
+	const { state, dispatch } = useAgencyContext()
 
 	const modalOpened = useMemo(() => {
 		return state.defaultAgency === null

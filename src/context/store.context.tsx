@@ -1,4 +1,3 @@
-'use client'
 import { StoreGroupsEnum } from '@/constants/store'
 import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
 

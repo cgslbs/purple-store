@@ -1,5 +1,3 @@
-'use client'
-
 import { CartActionEnum, CartItemType, useCartContext } from '@/context/cart.context'
 import { CodeHighlight } from '@mantine/code-highlight'
 import {
@@ -71,7 +69,7 @@ const TotalCodeHighlight = () => {
 				item.quantity > 1
 					? `*${item.quantity} = ${item.price * item.quantity}pts & ${item.gain * item.quantity}${
 							item.isBooster ? ` streams` : `xp`
-					  } ${item.isBooster && item.doubleGain !== undefined ? `+ ${item.doubleGain * item.quantity}xp` : ``}`
+						} ${item.isBooster && item.doubleGain !== undefined ? `+ ${item.doubleGain * item.quantity}xp` : ``}`
 					: ``
 			}\n`
 		})
