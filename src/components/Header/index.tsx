@@ -1,4 +1,3 @@
-'use client'
 import { Container, Group, Tabs, Burger, ActionIcon, Tooltip, Indicator } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
@@ -27,10 +26,7 @@ export function HeaderTabs() {
 	const { state, dispatch } = useAgencyContext()
 	const { groupStore, dispatch: storeDispatch } = useStoreContext()
 
-	const currentAgency = AGENCIES.find(
-		// eslint-disable-next-line prettier/prettier
-		(agency) => agency.value === state.defaultAgency
-	)
+	const currentAgency = AGENCIES.find((agency) => agency.value === state.defaultAgency)
 	const defaultActionButton: Pick<AgencyItem, 'color' | 'icon'> =
 		currentAgency === undefined ? { icon: IconDoor, color: 'blue' } : currentAgency
 

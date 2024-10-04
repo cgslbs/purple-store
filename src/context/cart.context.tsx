@@ -1,4 +1,3 @@
-'use client'
 import { CompleteItem } from '@/interfaces'
 import { Dispatch, ReactNode, Reducer, createContext, useContext, useMemo, useReducer } from 'react'
 

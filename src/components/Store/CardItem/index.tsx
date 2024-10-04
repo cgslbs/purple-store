@@ -35,7 +35,7 @@ const CardItem = (item: CardItemProps) => {
 				{name}
 			</Text>
 			<Group p='xs' align='flex-end' justify='space-between'>
-				{condition!! && (
+				{condition! && (
 					<Tooltip label={condition}>
 						<ThemeIcon variant='light' radius='lg' size='sm' color='gray'>
 							<IconInfoCircle />

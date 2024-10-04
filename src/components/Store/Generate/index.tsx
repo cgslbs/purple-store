@@ -1,5 +1,3 @@
-'use client'
-
 import { DEFAULT_ITEM, SPECFIC_SECTION } from '@/constants/item'
 import { StoreGroupsEnum, StoreSectionEnum } from '@/constants/store'
 import { StoreByGroup } from '@/interfaces'

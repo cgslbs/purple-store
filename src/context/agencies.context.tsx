@@ -1,4 +1,3 @@
-'use client'
 import { AgenciesEnum } from '@/constants/agency'
 import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
 

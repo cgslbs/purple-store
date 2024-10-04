@@ -1,5 +1,3 @@
-'use client'
-
 import { Container, Drawer } from '@mantine/core'
 import { useCartContext } from '@/context/cart.context'
 import { Cart } from '../Cart'
