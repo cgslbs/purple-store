@@ -45,11 +45,11 @@ import { ItemGainType } from '@/constants/item'
 // 	color: MantineColor
 // }
 
-// export interface IAgency {
-// 	id: number
-// 	code: string
-// 	name: string
-// }
+export interface IAgency {
+	id: number
+	code: string
+	name: string
+}
 
 export enum ProjectTypeEnum {
 	NONE,
