@@ -142,15 +142,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 	const totalGain = state.cart
 		.filter((i) => i.gainType === ItemGainType.XP)
 		.reduce((previousValue, cartItem) => {
+			if (cartItem.doubleGain !== null) {
+				previousValue + cartItem.doubleGain * cartItem.quantity
+			}
 			return previousValue + cartItem.gain * cartItem.quantity
 		}, 0)
 
 	const totalStream = state.cart
 		.filter((i) => i.gainType === ItemGainType.STREAM || i.doubleGain !== null)
 		.reduce((previousValue, cartItem) => {
-			if (cartItem.doubleGain !== null) {
-				previousValue + cartItem.doubleGain * cartItem.quantity
-			}
 			return previousValue + cartItem.gain * cartItem.quantity
 		}, 0)
 
