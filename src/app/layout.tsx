@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
+import '@mantine/code-highlight/styles.css'
 
 import { Gruppo, Playfair_Display } from 'next/font/google'
 import { theme } from '@/styles/theme'

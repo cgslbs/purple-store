@@ -3,12 +3,7 @@ import { createTheme } from '@mantine/core'
 
 export const theme = createTheme({
 	focusRing: 'never',
-	headings: {
-		fontFamily: 'Playfair display',
-		sizes: {
-			h1: { fontSize: '4rem' },
-		},
-	},
+
 	primaryColor: 'violet',
 	colors: {
 		blue: [
