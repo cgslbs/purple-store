@@ -51,6 +51,19 @@ import { ItemGainType } from '@/constants/item'
 // 	name: string
 // }
 
+export enum ProjectTypeEnum {
+	NONE,
+	RELEASE,
+	PRODUCTION,
+	DRAMA,
+	CF_PHOTOSHOOT,
+	AMBASSADOR_FACE_CONTRACT,
+	OTHER,
+	OST_DRAMA,
+	IG_YTB_POST,
+	TITLE,
+}
+
 export interface IItem {
 	id: number
 	name: string
@@ -59,6 +72,7 @@ export interface IItem {
 	gain: number
 	doubleGain: number | null
 	condition: string
+	type: ProjectTypeEnum
 }
 
 export interface ICategory {
