@@ -48,7 +48,7 @@ import {
 	ProjectItemType,
 	defaultProjectItem,
 } from './Cart.types'
-import { useMemo, useReducer } from 'react'
+import { useEffect, useMemo, useReducer } from 'react'
 import { CodeHighlight } from '@mantine/code-highlight'
 import { IItem, ProjectTypeEnum } from '@/interfaces'
 import dayjs from 'dayjs'
@@ -142,11 +142,23 @@ const Total = () => {
 // PROJECT COMPONENTS
 const ItemsMultiselect = ({ index, isEditMode, currentTypeProject }: ItemsMultiselectProps) => {
 	const { cart } = useCartContext()
-	const { control, setValue } = useFormContext()
+	const { control, setValue, getValues } = useFormContext()
 	const currentSelection = useWatch({ control, name: `projects.${index}.items` }) as CartItemType[]
 	const optionByProject = useMemo(() => {
-		return cart.filter((item) => item.type === currentTypeProject)
+		return cart.filter((item) => item.type === currentTypeProject && item.gainType !== ItemGainType.STREAM)
 	}, [currentTypeProject, cart])
+
+	useEffect(() => {
+		// UPDATE SELECTION IF ITEM IS REMOVED FROM CART
+		const saveItems: IItem[] = []
+		const currSelection: IItem[] = getValues(`projects.${index}.items`)
+		currSelection.forEach((selectItem) => {
+			const currItem = cart.find((item) => item.id === +selectItem.id)
+			if (currItem === undefined) return
+			saveItems.push(currItem)
+		})
+		setValue(`projects.${index}.items`, saveItems)
+	}, [cart])
 
 	return (
 		<MultiSelect
@@ -537,60 +549,46 @@ const TotalCodeHighlight = () => {
 	const projects: ProjectItemType[] = getValues('projects')
 	const allItems = cart
 	let listItems = ''
-
-	if (projects.length > 0) {
-		projects.forEach((project) => {
-			project.items.forEach((item) => {
-				// list item for project
-				listItems += itemLine(item, true)
-				// remove item from allitems
-				const currItemIndex = allItems.findIndex((v) => v.id === item.id)
-				allItems[currItemIndex].quantity -= 1
-			})
-			listItems += `→ ${projectLine(project)} \n`
-		})
-	}
-
-	if (allItems.length > 0) {
-		allItems.forEach((item) => {
-			if (item.quantity > 0) listItems += itemLine(item)
-		})
-	}
-	// 2ND PART: histo code
-	const currentDate = `${dayjs().format('DDMM')}`
 	let itemsHistory = ''
 
 	if (projects.length > 0) {
 		projects.forEach((project) => {
 			const currProject = projectLine(project)
-			const projectBoosters = project.items.filter((item) => item.gainType === ItemGainType.STREAM)
-			if (projectBoosters.length > 0) {
-				const totalBooster = project.items.reduce((acc, curr) => {
-					return acc + curr.gain
-				}, 0)
-				const totalBoosterQuantity = project.items.reduce((acc, curr) => {
-					return acc + curr.quantity
-				}, 0)
-				itemsHistory += `boosters * ${totalBoosterQuantity}${currProject}, <xp>${totalBooster / 1000}k streams</xp> \n`
-			}
-
 			project.items.forEach((item) => {
+				if (item.gainType === ItemGainType.STREAM) return
+				// HISTORY CODE LINE
 				itemsHistory += `${item.name} (${currProject}) <xp>${item.gain}XP</xp> \n`
+				// ITEM LIST
+				listItems += itemLine(item, true)
 				// remove item from allitems
 				const currItemIndex = allItems.findIndex((v) => v.id === item.id)
 				allItems[currItemIndex].quantity -= 1
 			})
+			listItems += `→ ${currProject} \n`
 		})
 	}
 
 	if (allItems.length > 0) {
+		const boosters = allItems.filter((item) => item.gainType === ItemGainType.STREAM)
+		if (boosters.length > 0) {
+			const totalBoosterQuantity = boosters.reduce((acc, curr) => {
+				return acc + curr.quantity
+			}, 0)
+			itemsHistory += `boosters * ${totalBoosterQuantity}, <xp>${totalStream / 1000}k streams</xp> \n`
+		}
 		allItems.forEach((item) => {
-			if (item.quantity > 0)
-				itemsHistory += `${item.name} ${item.quantity > 1 ? `* ${item.quantity}` : ''} <xp>${
-					item.quantity > 1 ? `${item.gain * item.quantity}` : `${item.gain}`
-				}XP</xp> \n`
+			if (item.quantity > 0) {
+				listItems += itemLine(item)
+				if (item.gainType !== ItemGainType.STREAM) {
+					itemsHistory += `${item.name} ${item.quantity > 1 ? `* ${item.quantity}` : ''} <xp>${
+						item.quantity > 1 ? `${item.gain * item.quantity}` : `${item.gain}`
+					}XP</xp> \n`
+				}
+			}
 		})
 	}
+	// 2ND PART: histo code
+	const currentDate = `${dayjs().format('DDMM')}`
 	const summTotal = `Total: ${totalPrice}pts, ${totalGain > 0 ? `& ${totalGain}XP` : ''}${
 		totalStream > 0 ? `& ${totalStream} streams` : ''
 	} `
@@ -673,7 +671,7 @@ export default function ShoppingCart() {
 										)
 									})}
 									<Button
-										disabled={cart.every((i) => i.type === ProjectTypeEnum.NONE)}
+										disabled={cart.every((i) => i.type === ProjectTypeEnum.NONE || i.gainType === ItemGainType.STREAM)}
 										variant='outline'
 										fullWidth
 										onClick={() => append(defaultProjectItem)}>

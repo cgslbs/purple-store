@@ -149,7 +149,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		}, 0)
 
 	const totalStream = state.cart
-		.filter((i) => i.gainType === ItemGainType.STREAM || i.doubleGain !== null)
+		.filter((i) => i.gainType === ItemGainType.STREAM)
 		.reduce((previousValue, cartItem) => {
 			return previousValue + cartItem.gain * cartItem.quantity
 		}, 0)
