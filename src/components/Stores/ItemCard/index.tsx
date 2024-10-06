@@ -13,6 +13,7 @@ import { useState } from 'react'
 import classes from './ItemCard.module.css'
 import { CartActionEnum, useCartContext } from '@/context/cart.context'
 import { ItemGainType } from '@/constants/item'
+import { AGENCY_ICON_KEYS } from '@/constants/agency'
 
 type ItemProps = IItem & {
 	idx: number
@@ -21,6 +22,9 @@ type ItemProps = IItem & {
 export default function ItemCard(item: ItemProps) {
 	const { dispatch, cart } = useCartContext()
 	const [accordionValue, setAccordionValue] = useState<string | null>(null)
+
+	const currAgencyCode = localStorage.getItem('agency_code')
+	const currAgency = Object.entries(AGENCY_ICON_KEYS).find(([keys, _value]) => keys === currAgencyCode)
 	const itemInCart = cart.find((i) => i.id === item.id)
 
 	return (
@@ -47,7 +51,7 @@ export default function ItemCard(item: ItemProps) {
 						{item.price}
 					</Badge>
 					<Badge
-						color='pink'
+						color={item.hasBonus ? currAgency?.[1].color : 'pink'}
 						rightSection={
 							item.gainType === ItemGainType.XP ? (
 								<IconArrowBadgeUpFilled size={'0.75rem'} />
@@ -57,6 +61,11 @@ export default function ItemCard(item: ItemProps) {
 						}>
 						{item.gain}
 					</Badge>
+					{item.doubleGain !== null && (
+						<Badge color='pink' rightSection={<IconArrowBadgeUpFilled size={'0.75rem'} />}>
+							{item.doubleGain}
+						</Badge>
+					)}
 				</Group>
 				{itemInCart !== undefined ? (
 					<Group

@@ -73,6 +73,7 @@ export interface IItem {
 	doubleGain: number | null
 	condition: string
 	type: ProjectTypeEnum
+	hasBonus: boolean
 }
 
 export interface ICategory {
