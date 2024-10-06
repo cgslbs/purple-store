@@ -1,8 +1,9 @@
 'use client'
-import { CompleteItem } from '@/interfaces'
+import { ItemGainType } from '@/constants/item'
+import { IItem } from '@/interfaces'
 import { Dispatch, ReactNode, Reducer, createContext, useContext, useMemo, useReducer } from 'react'
 
-export type CartItemType = CompleteItem & {
+export type CartItemType = IItem & {
 	quantity: number
 }
 
@@ -24,7 +25,7 @@ type CartActionType = CartActionEnum
 
 type CartReducerAction = {
 	type: CartActionType
-	payload?: CompleteItem
+	payload?: CartItemType
 }
 
 const reducer: Reducer<CartStateType, CartReducerAction> = (state: CartStateType, action: CartReducerAction) => {
@@ -92,48 +93,6 @@ const reducer: Reducer<CartStateType, CartReducerAction> = (state: CartStateType
 		case CartActionEnum.CLEAR:
 			// clear the cart
 			return { ...state, cart: [] }
-
-		case CartActionEnum.ADD_SONG: {
-			// associate a song to the item
-			if (!action.payload) {
-				throw new Error('Payload missing in increase quantity action')
-			}
-			const currentItem = action.payload
-			const itemExist = state.cart.find((item) => item.id === currentItem.id)
-			if (!itemExist) {
-				throw new Error('Item does not exist, has to be added to cart')
-			}
-
-			const updateItem: CartItemType = {
-				...itemExist,
-				title: currentItem.title,
-				artist: currentItem.artist,
-				releaseDate: currentItem.releaseDate,
-			}
-			const filteredCart = state.cart.filter((item) => item.id !== currentItem.id)
-
-			return { ...state, cart: [...filteredCart, updateItem] }
-		}
-		case CartActionEnum.ADD_LINK: {
-			// associate a link to the item
-			if (!action.payload) {
-				throw new Error('Payload missing in increase quantity action')
-			}
-			const currentItem = action.payload
-			const itemExist = state.cart.find((item) => item.id === currentItem.id)
-			if (!itemExist) {
-				throw new Error('Item does not exist, has to be added to cart')
-			}
-
-			const updateItem: CartItemType = {
-				...itemExist,
-				title: currentItem.title,
-				link: currentItem.link,
-			}
-			const filteredCart = state.cart.filter((item) => item.id !== currentItem.id)
-
-			return { ...state, cart: [...filteredCart, updateItem] }
-		}
 		default:
 			return { ...state }
 	}
@@ -146,10 +105,7 @@ type CartContextType = {
 	totalPrice: number
 	totalGain: number
 	totalStream: number
-	totalDoubleGain: number
 	cart: CartItemType[]
-	isOpened: boolean
-	toggleCart: () => void
 }
 
 const initCartContextState: CartContextType = {
@@ -158,11 +114,8 @@ const initCartContextState: CartContextType = {
 	totalItems: 0,
 	totalPrice: 0,
 	totalGain: 0,
-	totalDoubleGain: 0,
 	totalStream: 0,
 	cart: [],
-	isOpened: false,
-	toggleCart: () => null,
 }
 
 export const CartContext = createContext<CartContextType>(initCartContextState)
@@ -173,8 +126,6 @@ type CartContextProviderProps = {
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, initCartState)
-
-	const [isOpened, toggleCart] = useReducer((s) => !s, false)
 
 	const REDUCER_ACTIONS = useMemo(() => {
 		return CartActionEnum
@@ -189,21 +140,18 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 	}, 0)
 
 	const totalGain = state.cart
-		.filter((i) => !i.isBooster)
+		.filter((i) => i.gainType === ItemGainType.XP)
 		.reduce((previousValue, cartItem) => {
+			if (cartItem.doubleGain !== null) {
+				previousValue + cartItem.doubleGain * cartItem.quantity
+			}
 			return previousValue + cartItem.gain * cartItem.quantity
 		}, 0)
 
 	const totalStream = state.cart
-		.filter((i) => i.isBooster)
+		.filter((i) => i.gainType === ItemGainType.STREAM || i.doubleGain !== null)
 		.reduce((previousValue, cartItem) => {
 			return previousValue + cartItem.gain * cartItem.quantity
-		}, 0)
-
-	const totalDoubleGain = state.cart
-		.filter((i) => i.isBooster && !!i.doubleGain)
-		.reduce((previousValue, cartItem) => {
-			return previousValue + cartItem.doubleGain! * cartItem.quantity
 		}, 0)
 
 	const cart = state.cart.sort((a, b) => {
@@ -218,13 +166,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 				dispatch,
 				REDUCER_ACTIONS,
 				totalItems,
-				totalDoubleGain,
 				totalGain,
 				totalStream,
 				totalPrice,
 				cart,
-				isOpened,
-				toggleCart,
 			}}>
 			{children}
 		</CartContext.Provider>

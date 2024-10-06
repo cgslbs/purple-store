@@ -1,90 +1,56 @@
 'use client'
-import { Container, Group, Tabs, Burger, ActionIcon, Tooltip, Indicator } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { ActionIcon, Container, Group, Indicator, Tooltip } from '@mantine/core'
 
 import classes from './header.module.css'
 import { IconDoor, IconShoppingCart } from '@tabler/icons-react'
-import { useAgencyContext } from '@/context/agencies.context'
-import { AGENCIES, AgenciesEnum } from '@/constants/agency'
-import { AgencyItem } from '@/interfaces'
-import { DEFAULT_STORE_GROUP_TABS, GROUP_STORE_TABS } from '@/constants/store'
 import { useCartContext } from '@/context/cart.context'
-import { useStoreContext } from '@/context/store.context'
+import { useRouter } from 'next/navigation'
+import { AGENCY_ICON_KEYS } from '@/constants/agency'
 
 const CartIndicator = () => {
-	const { totalItems, toggleCart } = useCartContext()
+	const router = useRouter()
+	const { totalItems } = useCartContext()
+
+	const onCartRedirect = () => {
+		router.push('/cart')
+	}
 
 	return (
 		<Indicator radius={50} color='dark' inline label={totalItems} position='bottom-end' size={16}>
-			<ActionIcon color='dark' variant='outline' aria-label='Cart' onClick={() => toggleCart()}>
+			<ActionIcon color='dark' variant='outline' aria-label='Cart' onClick={onCartRedirect}>
 				<IconShoppingCart size={16} />
 			</ActionIcon>
 		</Indicator>
 	)
 }
 
-export function HeaderTabs() {
-	const { state, dispatch } = useAgencyContext()
-	const { groupStore, dispatch: storeDispatch } = useStoreContext()
+export default function Header() {
+	const router = useRouter()
 
-	const currentAgency = AGENCIES.find(
-		// eslint-disable-next-line prettier/prettier
-		(agency) => agency.value === state.defaultAgency
-	)
-	const defaultActionButton: Pick<AgencyItem, 'color' | 'icon'> =
-		currentAgency === undefined ? { icon: IconDoor, color: 'blue' } : currentAgency
+	const onChangeAgency = () => {
+		localStorage.setItem('agency_code', '')
+		router.push('/')
+	}
 
-	const [opened, { toggle }] = useDisclosure(false)
-
-	const tabStore =
-		state.defaultAgency === AgenciesEnum.MT || state.defaultAgency === AgenciesEnum.HR
-			? DEFAULT_STORE_GROUP_TABS
-			: [...DEFAULT_STORE_GROUP_TABS, GROUP_STORE_TABS]
-
-	const items = tabStore
-		.sort((a, b) => a.id - b.id)
-		.map((tab) => (
-			<Tabs.Tab value={tab.id.toString()} key={tab.id}>
-				{tab.title}
-			</Tabs.Tab>
-		))
+	const currAgencyCode = localStorage.getItem('agency_code')
+	const currAgency = Object.entries(AGENCY_ICON_KEYS).find(([keys, _value]) => keys === currAgencyCode)
+	const Icon = currAgency !== undefined ? currAgency[1].icon : IconDoor
 
 	return (
 		<div className={classes.header}>
 			<Container className={classes.mainSection} size='md'>
 				<Group justify='end'>
-					<Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' />
-
 					<Tooltip label="Changer d'agence">
 						<ActionIcon
 							variant='filled'
-							aria-label='Change agency'
-							onClick={() => dispatch(null)}
-							color={defaultActionButton.color}>
-							<defaultActionButton.icon style={{ width: '70%', height: '70%' }} stroke={1.5} />
+							aria-label={`agency ${currAgencyCode}`}
+							onClick={onChangeAgency}
+							color={currAgency !== undefined ? currAgency[1].color : 'violet'}>
+							<Icon style={{ width: '70%', height: '70%' }} stroke={1.5} />
 						</ActionIcon>
 					</Tooltip>
-					<Tooltip label='Voir le panier'>
-						<CartIndicator />
-					</Tooltip>
+					<CartIndicator />
 				</Group>
-			</Container>
-			<Container size='md'>
-				<Tabs
-					value={groupStore.defaultStore}
-					onChange={(tab) => {
-						if (tab === null) return
-						storeDispatch(tab)
-					}}
-					variant='outline'
-					visibleFrom='sm'
-					classNames={{
-						root: classes.tabs,
-						list: classes.tabsList,
-						tab: classes.tab,
-					}}>
-					<Tabs.List>{items}</Tabs.List>
-				</Tabs>
 			</Container>
 		</div>
 	)

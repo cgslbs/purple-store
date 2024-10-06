@@ -1,12 +1,12 @@
 'use client'
-import { AgenciesEnum } from '@/constants/agency'
+import { AgencyCodeEnum } from '@/constants/agency'
 import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
 
 type StateType = {
-	defaultAgency: AgenciesEnum | null
+	defaultAgency: AgencyCodeEnum | null
 }
 
-type ActionType = AgenciesEnum | null
+type ActionType = AgencyCodeEnum | null
 
 const initialState: StateType = {
 	defaultAgency: null,
@@ -14,14 +14,16 @@ const initialState: StateType = {
 
 const reducer = (state: StateType, action: ActionType) => {
 	if (action !== null) {
+		localStorage.setItem('agency_code', action)
 		return { ...state, defaultAgency: action }
 	}
+	localStorage.setItem('agency_code', '')
 	return { ...state, defaultAgency: null }
 }
 
 type AgencyContextType = {
 	state: StateType
-	dispatch: Dispatch<AgenciesEnum | null>
+	dispatch: Dispatch<AgencyCodeEnum | null>
 }
 
 export const AgencyContext = createContext<AgencyContextType>({

@@ -1,12 +1,26 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { MantineProvider } from '@mantine/core'
-import { AgencyContextProvider } from '@/context/agencies.context'
 import '@mantine/core/styles.css'
-import { CartContextProvider } from '@/context/cart.context'
-import { StoreContextProvider } from '@/context/store.context'
+import '@mantine/code-highlight/styles.css'
 
-const inter = Inter({ subsets: ['latin'] })
+import { Gruppo, Playfair_Display } from 'next/font/google'
+import { theme } from '@/styles/theme'
+import GlobalContext from '@/context/global.context'
+import ReactQueryProvider from '@/utils/ReactQueryProvider'
+
+// Google font here
+const playfairDisplay = Playfair_Display({
+	subsets: ['latin'],
+	variable: '--font-playfair',
+	display: 'swap',
+})
+
+const gruppo = Gruppo({
+	weight: '400',
+	subsets: ['latin'],
+	variable: '--font-gruppo',
+	display: 'swap',
+})
 
 export const metadata: Metadata = {
 	title: 'Purple store',
@@ -16,14 +30,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='fr'>
-			<body className={inter.className}>
-				<MantineProvider>
-					<AgencyContextProvider>
-						<StoreContextProvider>
-							<CartContextProvider>{children}</CartContextProvider>
-						</StoreContextProvider>
-					</AgencyContextProvider>
-				</MantineProvider>
+			<body className={`${playfairDisplay.variable} ${gruppo.variable}`}>
+				<ReactQueryProvider>
+					<MantineProvider theme={theme}>
+						<GlobalContext>{children}</GlobalContext>
+					</MantineProvider>
+				</ReactQueryProvider>
 			</body>
 		</html>
 	)
