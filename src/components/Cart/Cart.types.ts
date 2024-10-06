@@ -1,5 +1,6 @@
 import { CartItemType } from '@/context/cart.context'
-import { IItem } from '@/interfaces'
+import { ProjectTypeEnum } from '@/interfaces'
+import { TextInputProps } from '@mantine/core'
 
 export type ProductRowProps = {
 	item: CartItemType
@@ -9,22 +10,30 @@ export type QuantityCounterProps = ProductRowProps
 
 export type ProjectItemProps = {
 	index: number
+	onRemove: () => void
 }
 
-export enum ProjectTypeEnum {
-	NULL,
-	RELEASE,
-	PRODUCTION,
-	DRAMA,
-	CF_PHOTOSHOOT,
-	AMBASSADOR_FACE_CONTRACT,
-	OTHER,
+export type ItemsMultiselectProps = Pick<ProjectItemProps, 'index'> & {
+	isEditMode: boolean
+	currentTypeProject: ProjectTypeEnum
+}
+
+export type FormByProjectProps = {
+	projectType: ProjectTypeEnum
+	index: number
+	isEditMode: boolean
+}
+
+export type InputEditModeProps = TextInputProps & {
+	isEditMode: boolean
+	textValue: string
 }
 
 export type ProjectItemType = {
 	projectType: ProjectTypeEnum
 	// SONG OR DRAMA
 	title?: string
+	subTitle?: string
 	artist?: string
 	// RELEASE DATE FOR SONG OR DATE IRL FOR PHOTOSHOOT/CF
 	releaseDate?: string
@@ -36,10 +45,10 @@ export type ProjectItemType = {
 	magazineName?: string
 	// ROLE IN DRAMA
 	roleName?: string
-	items: IItem[]
+	items: CartItemType[]
 }
 
 export const defaultProjectItem: ProjectItemType = {
-	projectType: ProjectTypeEnum.NULL,
+	projectType: ProjectTypeEnum.NONE,
 	items: [],
 }
