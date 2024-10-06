@@ -1,7 +1,7 @@
 'use client'
 
 import { useAgency } from './AgencySelection.queries'
-import { Grid, Modal, Stack, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
+import { Grid, LoadingOverlay, Modal, Stack, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
 import { IconDoor } from '@tabler/icons-react'
 import { useContext } from 'react'
 import { AgencyContext } from '@/context/agencies.context'
@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 
 export default function AgencySelection() {
 	const { dispatch } = useContext(AgencyContext)
-	const { data } = useAgency()
+	const { data, isLoading, isFetching } = useAgency()
 	const router = useRouter()
 
 	const onAgencySelection = (agencyCode: string) => {
@@ -18,7 +18,7 @@ export default function AgencySelection() {
 		router.push('/store')
 	}
 
-	// TODO: create an error component
+	if (isLoading || isFetching) return <LoadingOverlay />
 	if (data === undefined) return <div>Something wrong happened oops</div>
 
 	return (
