@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useStoreByAgency } from './StoreView.queries'
-import { Container, LoadingOverlay, Stack, Tabs } from '@mantine/core'
+import { Container, LoadingOverlay, ScrollArea, Stack, Tabs } from '@mantine/core'
 import { IconReceipt2 } from '@tabler/icons-react'
 import Store from './Store'
 import Header from '../Header'
@@ -27,7 +27,7 @@ export default function Stores() {
 	return (
 		<>
 			<Header />
-			<Container>
+			<Container size='lg'>
 				<Stack>
 					<Tabs variant='outline' defaultValue={data.at(0)?.id.toString()}>
 						<Tabs.List>
@@ -46,9 +46,11 @@ export default function Stores() {
 						{data.map((store) => {
 							return (
 								<Tabs.Panel key={`KEY_TABPANEL_${store.id}`} value={store.id.toString()}>
-									<Stack gap='lg'>
-										<Store store={store} />
-									</Stack>
+									<ScrollArea h='90vh'>
+										<Stack gap='lg'>
+											<Store store={store} />
+										</Stack>
+									</ScrollArea>
 								</Tabs.Panel>
 							)
 						})}
