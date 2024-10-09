@@ -46,7 +46,7 @@ export default function Stores() {
 						{data.map((store) => {
 							return (
 								<Tabs.Panel key={`KEY_TABPANEL_${store.id}`} value={store.id.toString()}>
-									<ScrollArea h='90vh'>
+									<ScrollArea h='90vh' offsetScrollbars>
 										<Stack gap='lg'>
 											<Store store={store} />
 										</Stack>
