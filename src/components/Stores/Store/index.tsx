@@ -32,9 +32,29 @@ export default function Store({ store }: StoreProps) {
 	return (
 		<Stack py='lg' gap='lg'>
 			<Button.Group>
-				{filteredSearch.map((category) => {
+				{filteredSearch.map((category, idx) => {
+					if (idx >= 6) return
+					if (idx === 5) {
+						return (
+							<Button
+								variant='light'
+								component='a'
+								size='sm'
+								key={`anchor_${category.id}`}
+								href={`#${category.id}`}
+								fullWidth>
+								Voir plus
+							</Button>
+						)
+					}
 					return (
-						<Button variant='light' component='a' key={`anchor_${category.id}`} href={`#${category.id}`} fullWidth>
+						<Button
+							variant='light'
+							component='a'
+							size='sm'
+							key={`anchor_${category.id}`}
+							href={`#${category.id}`}
+							fullWidth>
 							{category.name}
 						</Button>
 					)
