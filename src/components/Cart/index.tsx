@@ -597,7 +597,7 @@ const TotalCodeHighlight = () => {
 
 	const finalCode = `${listItems} \n ${summTotal} \n ${histCode}`
 
-	return <CodeHighlight miw='20rem' withCopyButton language='tsx' code={finalCode} />
+	return <CodeHighlight miw='20rem' maw='25vw' withCopyButton language='tsx' code={finalCode} />
 }
 
 export default function ShoppingCart() {
