@@ -48,7 +48,7 @@ import {
 	ProjectItemType,
 	defaultProjectItem,
 } from './Cart.types'
-import { useEffect, useMemo, useReducer } from 'react'
+import { useCallback, useReducer } from 'react'
 import { CodeHighlight } from '@mantine/code-highlight'
 import { IItem, ProjectTypeEnum } from '@/interfaces'
 import dayjs from 'dayjs'
@@ -144,28 +144,16 @@ const ItemsMultiselect = ({ index, isEditMode, currentTypeProject }: ItemsMultis
 	const { cart } = useCartContext()
 	const { control, setValue, getValues } = useFormContext()
 	const currentSelection = useWatch({ control, name: `projects.${index}.items` }) as CartItemType[]
-	const optionByProject = useMemo(() => {
+	const optionByProject = useCallback(() => {
 		return cart.filter((item) => item.type === currentTypeProject && item.gainType !== ItemGainType.STREAM)
 	}, [currentTypeProject, cart])
-
-	useEffect(() => {
-		// UPDATE SELECTION IF ITEM IS REMOVED FROM CART
-		const saveItems: IItem[] = []
-		const currSelection: IItem[] = getValues(`projects.${index}.items`)
-		currSelection.forEach((selectItem) => {
-			const currItem = cart.find((item) => item.id === +selectItem.id)
-			if (currItem === undefined) return
-			saveItems.push(currItem)
-		})
-		setValue(`projects.${index}.items`, saveItems)
-	}, [cart])
 
 	return (
 		<MultiSelect
 			label='Items'
 			w='100%'
-			disabled={optionByProject.length === 0 || !isEditMode}
-			data={optionByProject.map((item) => ({ value: item.id.toString(), label: item.name }))}
+			disabled={optionByProject().length === 0 || !isEditMode}
+			data={optionByProject().map((item) => ({ value: item.id.toString(), label: item.name }))}
 			value={currentSelection.map((item) => item.id.toString())}
 			onChange={(arrId) => {
 				const currSelection = arrId
@@ -547,7 +535,8 @@ const TotalCodeHighlight = () => {
 	const { getValues } = useFormContext()
 
 	const projects: ProjectItemType[] = getValues('projects')
-	const allItems = cart
+	const allItems = JSON.parse(JSON.stringify(cart)) as CartItemType[]
+
 	let listItems = ''
 	let itemsHistory = ''
 
